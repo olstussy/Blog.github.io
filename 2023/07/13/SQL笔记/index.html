@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="SQL笔记 基础：：user_profile    id device_id gender age university province    1 2138 male 21 北京大学 Beijing   2 3214 male  复旦大学 Shanghai   3 6543 female 20 北京大学 Beijing   4 2315 female 23 浙江大学 ZheJiang   5 5">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Olstussy">
+<meta property="og:url" content="http://example.com/2023/07/13/SQL%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="Olstussy">
+<meta property="og:description" content="SQL笔记 基础：：user_profile    id device_id gender age university province    1 2138 male 21 北京大学 Beijing   2 3214 male  复旦大学 Shanghai   3 6543 female 20 北京大学 Beijing   4 2315 female 23 浙江大学 ZheJiang   5 5">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20200802150143677.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTEwNDc5Njg=,size_16,color_FFFFFF,t_70">
+<meta property="article:published_time" content="2023-07-13T02:38:07.116Z">
+<meta property="article:modified_time" content="2023-05-25T09:48:32.713Z">
+<meta property="article:author" content="Olstussy">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20200802150143677.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTEwNDc5Njg=,size_16,color_FFFFFF,t_70">
+
+<link rel="canonical" href="http://example.com/2023/07/13/SQL%E7%AC%94%E8%AE%B0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title> | Olstussy</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Olstussy</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/07/13/SQL%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Olstussy">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Olstussy">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-07-13 10:38:07" itemprop="dateCreated datePublished" datetime="2023-07-13T10:38:07+08:00">2023-07-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-05-25 17:48:32" itemprop="dateModified" datetime="2023-05-25T17:48:32+08:00">2023-05-25</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>SQL笔记</p>
+<p>基础：：user_profile</p>
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>device_id</th>
+<th>gender</th>
+<th>age</th>
+<th>university</th>
+<th>province</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>2138</td>
+<td>male</td>
+<td>21</td>
+<td>北京大学</td>
+<td>Beijing</td>
+</tr>
+<tr>
+<td>2</td>
+<td>3214</td>
+<td>male</td>
+<td></td>
+<td>复旦大学</td>
+<td>Shanghai</td>
+</tr>
+<tr>
+<td>3</td>
+<td>6543</td>
+<td>female</td>
+<td>20</td>
+<td>北京大学</td>
+<td>Beijing</td>
+</tr>
+<tr>
+<td>4</td>
+<td>2315</td>
+<td>female</td>
+<td>23</td>
+<td>浙江大学</td>
+<td>ZheJiang</td>
+</tr>
+<tr>
+<td>5</td>
+<td>5432</td>
+<td>male</td>
+<td>25</td>
+<td>山东大学</td>
+<td>Shandong</td>
+</tr>
+</tbody></table>
+<p>1.查看用户信息表中所有的数据，请你取出相应结果   select * from user_profile</p>
+<p>2.想要用户的设备id对应的性别、年龄和学校的数据，请你取出相应数据  </p>
+<p>​    select device_id,gender,age,university from user_profile;</p>
+<p>3.查看用户来自于哪些学校，请从用户信息表中取出学校的<strong>去重</strong>数据  </p>
+<p>（1）select  DISTINCT university from user_profile;</p>
+<p>（2）select university from user_profile group by university；</p>
+<p>4.查看前2个用户明细设备ID数据，请你从用户信息表 user_profile 中取出相应结果</p>
+<p>​    select  device_id  from user_profile limit 0,2;</p>
+<p>5.查看前2个用户明细设备ID数据，并将列名改为 user_infos_example,从用户信息表取出相应结果</p>
+<p>   select  device_id   user_infos_example from  user_profile limit  0, 2;</p>
+<p>​                (原列名)   省略as （新列名）</p>
+<p>6.想要筛选出所有北京大学的学生进行用户调研，请你从用户信息表中取出满足条件的数据，结果返回设备id和学校</p>
+<p>   select device_id,university from user_profile where university&#x3D;’北京大学’;</p>
+<p>7.想要针对24岁以上的用户开展分析，请你取出满足条件的设备ID、性别、年龄、学校</p>
+<p>   select device_id,gender,age,university from user_profile where age&gt;24;</p>
+<p>8.想要针对20岁及以上且23岁及以下的用户开展分析，请你取出满足条件的设备ID、性别、年龄。</p>
+<p>  select device_id,gender,age from user_profile where age&gt;19 and age&lt;24;</p>
+<p>9.想要查看除复旦大学以外的所有用户明细，请你取出相应数据</p>
+<p>（1）select device_id,gender ,age,  university from user_profile where  university !&#x3D;’复旦大学’;</p>
+<p>（2）select device_id,gender ,age,  university from user_profile where  university NOT IN(<code>&quot;复旦大学&quot;</code>);</p>
+<p>10.剔除没有获取到年龄的用户，请你取出所有年龄值不为空的用户的设备ID，性别，年龄，学校的信息</p>
+<p>​    select device_id,gender ,age,  university from user_profile where  age !&#x3D;”NULL”;</p>
+<p>user_profile</p>
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>device_id</th>
+<th>gender</th>
+<th>age</th>
+<th>university</th>
+<th>gpa</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>2138</td>
+<td>male</td>
+<td>21</td>
+<td>北京大学</td>
+<td>3.4</td>
+</tr>
+<tr>
+<td>2</td>
+<td>3214</td>
+<td>male</td>
+<td></td>
+<td>复旦大学</td>
+<td>4.0</td>
+</tr>
+<tr>
+<td>3</td>
+<td>6543</td>
+<td>female</td>
+<td>20</td>
+<td>北京大学</td>
+<td>3.2</td>
+</tr>
+<tr>
+<td>4</td>
+<td>2315</td>
+<td>female</td>
+<td>23</td>
+<td>浙江大学</td>
+<td>3.6</td>
+</tr>
+<tr>
+<td>5</td>
+<td>5432</td>
+<td>male</td>
+<td>25</td>
+<td>山东大学</td>
+<td>3.8</td>
+</tr>
+</tbody></table>
+<p>11.想要找到学校为北大<strong>或</strong>GPA在3.7以上(不包括3.7)的用户进行调研，请你取出相关数据（使用OR实现）</p>
+<p> select device_id,gender,age,university,gpa from user_profile where university &#x3D;”北京大学” or gpa &gt;3.7;</p>
+<p>12.想要找到学校为北大、复旦和山大的同学进行调研，请你取出相关数据</p>
+<p>select device_id,gender,age,university,gpa from user_profile where university IN (‘北京大学’,’复旦大学’,’山东大学’);</p>
+<p>13.找到gpa在3.5以上(不包括3.5)的山东大学用户 或 gpa在3.8以上(不包括3.8)的复旦大学同学进行用户调研，请你取出相应数据</p>
+<p>select device_id,gender,age,university,gpa from user_profile where (university &#x3D;”山东大学” and gpa &gt;3.5) or (university&#x3D;”复旦大学” and gpa&gt;3.8);</p>
+<p>14.查看所有大学中带有北京的用户的信息，请你取出相应数据。</p>
+<p>   select device_id,age,university from user_profile where university like ‘%北京%’;</p>
+<p>15.想要知道复旦大学学生gpa最高值是多少，请你取出相应数据</p>
+<p>(1)SELECT gpa FROM user_profile WHERE university&#x3D;’复旦大学’ HAVING max(gpa);</p>
+<p>(2)SELECT MAX(gpa) FROM user_profile WHERE university&#x3D;’复旦大学’;</p>
+<p>16.想要看一下男性用户有多少人以及他们的平均gpa是多少，用以辅助设计相关活动，请你取出相应数据</p>
+<p>select count(gender) as male_num ,avg(gpa)from user_profile where gender&#x3D;’male’;</p>
+<p>17.现在运营想要对每个学校不同性别的用户活跃情况和发帖数量进行分析，请分别计算出每个学校每种性别的用户数、30天内平均活跃天数和平均发帖数量。</p>
+<p>SELECT gender,university,COUNT(gender),avg(active_days_within_30)as avg_active_days,</p>
+<p>avg(question_cnt)as question_cnt from user_profile</p>
+<p>GROUP by gender,university</p>
+<p>18.想查看每个学校用户的平均发贴和回帖情况，寻找低活跃度学校进行重点运营，请取出平均发贴数低于5的学校或平均回帖数小于20的学校</p>
+<p>select university,avg(question_cnt) as avg_question_cnt,avg(answer_cnt) as avg_answer_cnt </p>
+<p>from user_profile                                                                                            可以省略as</p>
+<p>group by university</p>
+<p>having avg_question_cnt&lt;5 or avg_answer_cnt &lt;20;</p>
+<p>19.想要查看不同大学的用户平均发帖情况，并期望结果按照平均发帖情况进行升序排列，请你取出相应数据。</p>
+<p>SELECT university,AVG(question_cnt)avg_quesition_cnt</p>
+<p>FROM user_profile</p>
+<p>GROUP BY university</p>
+<p>ORDER BY avg_quesition_cnt ASC;&#x2F;&#x2F;降序 DESC</p>
+<p>20.查看所有来自浙江大学的用户题目回答明细情况，请你取出相应数据</p>
+<p>select device_id,question_id,result</p>
+<p>from question_practice_detail</p>
+<p>where device_id &#x3D; (select device_id </p>
+<p>​          from user_profile </p>
+<p>​          where university &#x3D; ‘浙江大学’)</p>
+<p>question_practice_detail</p>
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>device_id</th>
+<th>question_id</th>
+<th>result</th>
+<th>date</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>2138</td>
+<td>111</td>
+<td>wrong</td>
+<td>2021-05-03</td>
+</tr>
+<tr>
+<td>2</td>
+<td>3214</td>
+<td>112</td>
+<td>wrong</td>
+<td>2021-05-09</td>
+</tr>
+<tr>
+<td>3</td>
+<td>3214</td>
+<td>113</td>
+<td>wrong</td>
+<td>2021-06-15</td>
+</tr>
+<tr>
+<td>4</td>
+<td>6543</td>
+<td>111</td>
+<td>right</td>
+<td>2021-08-13</td>
+</tr>
+<tr>
+<td>5</td>
+<td>2315</td>
+<td>115</td>
+<td>right</td>
+<td>2021-08-13</td>
+</tr>
+<tr>
+<td>6</td>
+<td>2315</td>
+<td>116</td>
+<td>right</td>
+<td>2021-08-14</td>
+</tr>
+<tr>
+<td>7</td>
+<td>2315</td>
+<td>117</td>
+<td>wrong</td>
+<td>2021-08-15</td>
+</tr>
+</tbody></table>
+<p>21.想要了解2021年8月份所有练习过题目的总用户数和练习过题目的总次数，请取出相应结果</p>
+<p>select</p>
+<p>  count(distinct device_id) as did_cnt,</p>
+<p>  count(question_id) as question_cnt</p>
+<p>from question_practice_detail</p>
+<p>where date like “2021-08%”</p>
+<p>22.将用户划分为25岁以下和25岁及以上两个年龄段，分别查看这两个年龄段用户数量</p>
+<p>SELECT if(age&lt;25 OR age IS null,”25岁以下”,”25岁及以上”) as age_cut,<br>count(user_profile.device_id) as number<br>FROM user_profile<br>GROUP BY age_cut</p>
+<p>23.将用户划分为<strong>20岁以下，20-24岁，25岁及以上</strong>三个年龄段，分别查看不同年龄段用户的明细情况，请取出相应数据。（注：若<strong>年龄为空</strong>请返回<strong>其他</strong>。）</p>
+<p>select device_id,  gender,</p>
+<p>  case</p>
+<p>​    when age &gt;&#x3D; 25 then ‘25岁及以上’</p>
+<p>​    when age &gt;&#x3D; 20 then ‘20-24岁’</p>
+<p>​    when age &lt; 20 then ‘20岁以下’</p>
+<p>​    else ‘其他’</p>
+<p>  end as age_cut</p>
+<p>from  user_profile</p>
+<p>24.想要计算出<strong>2021年8月每天用户练习题目的数量</strong>，请取出相应数据。</p>
+<p>select    day(date) as day,   count(question_id) as question_cnt</p>
+<p>from question_practice_detail</p>
+<p>where month(date)&#x3D;8 and year(date)&#x3D;2021  &#x2F;&#x2F;  where date like “2021-08%”</p>
+<p>group by date</p>
+<p>user_submit</p>
+<table>
+<thead>
+<tr>
+<th>device_id</th>
+<th>profile</th>
+<th>blog_url</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>2138</td>
+<td>180cm,75kg,27,male</td>
+<td>http:&#x2F;ur&#x2F;bisdgboy777</td>
+</tr>
+<tr>
+<td>3214</td>
+<td>165cm,45kg,26,female</td>
+<td>http:&#x2F;url&#x2F;dkittycc</td>
+</tr>
+<tr>
+<td>6543</td>
+<td>178cm,65kg,25,male</td>
+<td>http:&#x2F;ur&#x2F;tigaer</td>
+</tr>
+<tr>
+<td>4321</td>
+<td>171 cm,55kg,23,female</td>
+<td>http:&#x2F;url&#x2F;uhksd</td>
+</tr>
+<tr>
+<td>2131</td>
+<td>168cm,45kg,22,female</td>
+<td>http:&#x2F;url&#x2F;sydney</td>
+</tr>
+</tbody></table>
+<p>25.对于申请参与比赛的用户，blog_url字段中url字符后的字符串为用户个人博客的用户名，现在运营想要把用户的个人博客用户字段提取出单独记录为一个新的字段，请取出所需数据</p>
+<p>select device_id, substring_index(blog_url, ‘&#x2F;‘, -1) as user_name </p>
+<p> &#x2F;&#x2F;负数代表从右往左  -1代表最后一个&#x2F;后面   正数代表代表从左往右  1代表第一个&#x2F;后面</p>
+<p>from user_submit</p>
+<p>26.统计每个性别的用户分别有多少参赛者，请取出相应结果</p>
+<p>select  substring_index(profile, ‘,’, -1) as gender,  &#x2F;&#x2F;最后一个字符串是性别</p>
+<p>count(device_id) as number</p>
+<p>from user_submit</p>
+<p>group by gender</p>
+<p>27.统计每个年龄的用户分别有多少参赛者，请取出相应结果</p>
+<p>SELECT </p>
+<p>  substring_index(substring_index(profile, “,”, -2), “,”, 1) as age,</p>
+<p>​                                                      拿到年龄xxkg       把kg去掉赋给age</p>
+<p>  COUNT(device_id )  as number</p>
+<p>FROM user_submit</p>
+<p>GROUP BY age;</p>
+<p>28.现在运营想要找到每个学校gpa最低的同学来做调研，请你取出每个学校的最低gpa。</p>
+<p>&#x2F;&#x2F;<code>SELECT device_id,</code><br>       <code>university,</code><br>       <code>min(gpa) as gpa</code>           这代码是错的 有聚合函数min() where失效了 可用having语句<br><code>FROM user_profile</code><br>&#x2F;&#x2F;<code>GROUP BY university</code></p>
+<p>正确代码：</p>
+<p><code>select  device_id, university,gpa</code>   </p>
+<p><code>from user_profile</code></p>
+<p><code>where (university, gpa) in (</code></p>
+<p>​    <code>select university,min(gpa)</code></p>
+<p>​    <code>from  user_profile</code></p>
+<p>​    <code>group by university )</code></p>
+<p><code>order by university</code></p>
+<p>29.编写 SQL 语句，返回顾客 ID（cust_id）、顾客名称（cust_name）和登录名（user_login），其中登录名全部为大写字母，并由顾客联系人的前两个字符（cust_contact）和其所在城市的前三个字符（cust_city）组成。提示：需要使用函数、拼接和别名。</p>
+<p><code>select</code> </p>
+<p><code>cust_id,cust_name,</code></p>
+<p><code>upper(concat(left(cust_contact,2),left(cust_city,3))) as user_login</code></p>
+<p>​               cust_contact   前两个字符 拼接cust_city前三个字符赋给user_login</p>
+<p><code>from Customers</code></p>
+<p>30.编写 SQL 语句，返回 2020 年 1 月的所有订单的订单号（order_num）和订单日期（order_date），并按订单日期升序排序</p>
+<p><code>select order_num,order_date</code></p>
+<p><code>from Orders</code></p>
+<p><code>where order_date like &#39;2020-01%&#39;</code></p>
+<p><code>order by order_date;</code></p>
+<p>31.使用子查询，返回购买价格为 10 美元或以上产品的顾客列表，结果无需排序。</p>
+<p><code>SELECT DISTINCT cust_id</code></p>
+<p><code>FROM Orders</code></p>
+<p><code>WHERE order_num IN (</code></p>
+<p>  <code>SELECT order_num</code></p>
+<p>  <code>FROM OrderItems</code></p>
+<p>  <code>WHERE item_price &gt;= 10</code></p>
+<p><code>)</code></p>
+<p>32.编写 SQL语句，返回顾客 ID（Orders 表中的 cust_id），并使用子查询返回total_ordered 以便返回每个顾客的订单总数，将结果按金额从大到小排序</p>
+<p><code>select cust_id,(select</code></p>
+<p> <code>SUM(item_price*quantity)</code></p>
+<p><code>FROM OrderItems</code> </p>
+<p><code>WHERE OrderItems .order_num=Orders .order_num) total_ordered</code></p>
+<p><code>from Orders</code> </p>
+<p><code>ORDER BY total_ordered DESC</code></p>
+<p>33.编写 SQL 语句，返回 Customers 表中的顾客名称（cust_name）和Orders 表中的相关订单号（order_num），并按顾客名称再按订单号对结果进行升序排序。你可以尝试用两个不同的写法，一个使用简单的等联结语法，另外一个使用 INNER JOIN。</p>
+<p>(1)<code>select cust_name,order_num</code></p>
+<p><code>from Customers C,Orders O</code></p>
+<p><code>where C.cust_id=O.cust_id</code></p>
+<p><code>order by cust_name</code></p>
+<p>(2)<code>select cust_name,order_num</code></p>
+<p><code>from Customers</code> </p>
+<p><code>inner join Orders</code></p>
+<p><code>on Customers.cust_id=Orders.cust_id</code></p>
+<p><code>order by cust_name</code></p>
+<p>34.使用子查询来确定哪些订单（在 OrderItems 中）购买了 prod_id 为 “BR01” 的产品，然后从 Orders 表中返回每个产品对应的顾客 ID（cust_id）和订单日期（order_date），按订购日期对结果进行升序排序</p>
+<p><code>select cust_id,order_date</code></p>
+<p><code>from Orders</code> </p>
+<p>&#96;&#96;where order_num  in&#96;</p>
+<p><code>(``select order_num</code>  <code>from OrderItems</code> <code>where  prod_id=&#39;BR01&#39;``)</code></p>
+<p><code>order by order_date</code></p>
+<ol start="35">
+<li>SQL 100题   编写 SQL 语句，返回订单总价不小于1000 的客户名称和总额,需要计算总和（item_price 乘以 quantity）。按总额对结果进行排序，请使用INNER JOIN 语法。</li>
+</ol>
+<p><code>select cust_name,sum(item_price*quantity) total_price</code></p>
+<p><code>from Customers C</code></p>
+<p><code>inner join Orders  O</code></p>
+<p><code>on C.cust_id=O.cust_id</code></p>
+<p><code>inner join OrderItems OI</code></p>
+<p><code>on O.order_num=OI.order_num</code></p>
+<p><code>group by cust_name</code>                           &#x2F;&#x2F;having语句前要用group by   有聚合函数时不能使用where</p>
+<p><code>having total_price&gt;=1000</code></p>
+<p><code>order by total_price</code></p>
+<ol start="36">
+<li><p>将两个 SELECT 语句结合起来，以便从 OrderItems表中检索产品 id（prod_id）和 quantity。其中，一个 SELECT 语句过滤数量为 100 的行，另一个 SELECT 语句过滤 id 以 BNBG 开头的产品，最后按产品 id 对结果进行升序排序</p>
+<p>（1）<code>select *from OrderItems</code></p>
+<p><code>where quantity in (</code></p>
+<p>  <code>select quantity   from OrderItems  where quantity = 100 )</code></p>
+<p><code>or prod_id like &quot;BNBG%&quot;</code></p>
+<p><code>order by prod_id;</code></p>
+<hr>
+<p>（2）<code>select prod_id,quantity</code></p>
+<p><code>from OrderItems</code></p>
+<p><code>where quantity =100</code></p>
+<p><code>union all</code>               &#x2F;&#x2F;union把select语句结合以后  取的或  即满足一个条件即可</p>
+<p><code>select prod_id,quantity</code></p>
+<p><code>from OrderItems</code></p>
+<p><code>where prod_id like&#39;BNBG%&#39;</code></p>
+<p><code>order by prod_id</code></p>
+</li>
+</ol>
+<p><strong>各种连接：推荐使用左连接</strong></p>
+<p><img src="https://img-blog.csdnimg.cn/20200802150143677.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTEwNDc5Njg=,size_16,color_FFFFFF,t_70" alt="sqljoins"></p>
+<p>表A记录如下：                           表B记录如下:<br><strong>aID    aNum</strong>                             <strong>bID    bName</strong><br>1      a20050111                        1      2006032401<br>2      a20050112                        2      2006032402<br>3      a20050113                        3      2006032403<br>4     a20050114                         4      2006032404<br>5      a20050115                        8      2006032408<br><strong>1.  left join</strong><br>sql语句如下:</p>
+<p>SELECT * FROM A<br>LEFT JOIN B<br>ON A.aID &#x3D; B.bID</p>
+<p>结果如下:<br>aID    aNum          bID      bName<br>1      a20050111     1        2006032401<br>2       a20050112     2        2006032402<br>3       a20050113     3        2006032403                   左(主)表元素全会存在，即使右(副)表没有此行，<br>4      a20050114     4        2006032404                          若没有，右表会全置为null<br>5      a20050115     NULL    NULL<br>（所影响的行数为 5 行）</p>
+<p>**大数据时删除数据(不推荐使用delete)**使用新建表，copy旧表到新表，删除旧表，重命名新表为旧表名字</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">--创建分区表。</span><br><span class="line">CREATE TABLE tpcds.reason_p</span><br><span class="line">(</span><br><span class="line">  r_reason_sk integer,</span><br><span class="line">  r_reason_id character(16),</span><br><span class="line">  r_reason_desc character(100)</span><br><span class="line">)PARTITION BY RANGE (r_reason_sk)</span><br><span class="line">(</span><br><span class="line">  partition p_05_before values less than (05),</span><br><span class="line">  partition p_15 values less than (15),</span><br><span class="line">  partition p_25 values less than (25),</span><br><span class="line">  partition p_35 values less than (35),</span><br><span class="line">  partition p_45_after values less than (MAXVALUE)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">--插入数据。</span><br><span class="line">INSERT INTO tpcds.reason_p SELECT * FROM tpcds.reason;</span><br><span class="line"></span><br><span class="line">--清空分区p_05_before。</span><br><span class="line">ALTER TABLE tpcds.reason_p TRUNCATE PARTITION p_05_before;</span><br><span class="line"></span><br><span class="line">--清空分区p_15。</span><br><span class="line">ALTER TABLE tpcds.reason_p TRUNCATE PARTITION for (13);</span><br><span class="line"></span><br><span class="line">--清空分区表。</span><br><span class="line">TRUNCATE TABLE tpcds.reason_p;</span><br><span class="line"></span><br><span class="line">--删除表。</span><br><span class="line">DROP TABLE tpcds.reason_p;</span><br></pre></td></tr></table></figure>
+
+<p><strong>删除</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DELETE FROM table_name</span><br><span class="line">WHERE condition;</span><br></pre></td></tr></table></figure>
+
+<p><strong>插入</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO table_name</span><br><span class="line">VALUES (value1,value2,value3,...);</span><br><span class="line">或</span><br><span class="line">INSERT INTO table_name (column1,column2,column3,...)</span><br><span class="line">VALUES (value1,value2,value3,...);</span><br></pre></td></tr></table></figure>
+
+<p>32：牛客后台会记录每个用户的试卷作答记录到exam_record表，现在有两个用户的作答记录详情如下：</p>
+<p>  用户1001在2021年9月1日晚上10点11分12秒开始作答试卷9001，并在50分钟后提交，得了90分；</p>
+<p>  用户1002在2021年9月4日上午7点1分2秒开始作答试卷9002，并在10分钟后退出了平台。</p>
+<p><code>INSERT INTO exam_record VALUES</code></p>
+<p><code>(NULL, 1001, 9001, &#39;2021-09-01 22:11:12&#39;, &#39;2021-09-01 23:01:12&#39;, 90),</code></p>
+<p><code>(NULL, 1002, 9002, &#39;2021-09-04 07:01:02&#39;, NULL, NULL);</code></p>
+<p>33：我们已经创建了一张新表exam_record_before_2021用来备份2021年之前的试题作答记录，结构和exam_record表一致，请将2021年之前的已完成了的试题作答纪录导入到该表</p>
+<p><code>INSERT INTO exam_record_before_2021(uid, exam_id, start_time, submit_time, score)</code></p>
+<p><code>SELECT uid, exam_id, start_time, submit_time, score</code></p>
+<p><code>FROM exam_record</code></p>
+<p><code>WHERE YEAR(submit_time) &lt; &#39;2021&#39;;</code></p>
+<p>34.有一套ID为9003的高难度SQL试卷，时长为一个半小时，请你将 2021-01-01 00:00:00 作为发布时间插入到试题信息表examination_info（其表结构如下图），不管该ID试卷是否存在，都要插入成功，请尝试插入它</p>
+<p><code>replace INTO examination_info</code>  &#x2F;&#x2F;会先检查是否存在此数据，如果有则不插入，没有则插入</p>
+<p><code>VALUES(NULL,9003,&#39;SQL&#39;,&#39;hard&#39;,90,&#39;2021-01-01 00:00:00&#39;);</code></p>
+<p><strong>或</strong></p>
+<p><code>insert INTO examination_info</code>  &#x2F;&#x2F;不会检查是否存在此数据，直接插入</p>
+<p><code>VALUES(NULL,9003,&#39;SQL&#39;,&#39;hard&#39;,90,&#39;2021-01-01 00:00:00&#39;);</code></p>
+<p><strong>更新</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">UPDATE table_name</span><br><span class="line">SET column1 = value1, column2 = value2, ...</span><br><span class="line">WHERE condition;</span><br></pre></td></tr></table></figure>
+
+<p>35.把examination_info表中tag为PYTHON的tag字段全部修改为Python。</p>
+<p><code>update examination_info  set tag=&#39;Python&#39;   where tag=&#39;PYTHON&#39;</code></p>
+<p>36.编写SQL 语句，查找所有订购了数量至少100 个的 BR01、BR02 或BR03 的订单。你需要返回 OrderItems 表的订单号（order_num）、产品 ID（prod_id）和数量（quantity），并按产品 ID 和数量进行过滤</p>
+<p><code>select order_num,prod_id,quantity</code></p>
+<p><code>from OrderItems</code></p>
+<p><code>where (prod_id=&#39;BR01&#39;or prod_id=&#39;BR02&#39;or prod_id=&#39;BR03&#39;) and quantity&gt;=100</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT order_num,prod_id,quantity</span><br><span class="line">FROM OrderItems</span><br><span class="line">WHERE quantity &gt;= ``100` `AND prod_id IN (``&#x27;BR01&#x27;``, ``&#x27;BR02&#x27;``, ``&#x27;BR03&#x27;``);</span><br></pre></td></tr></table></figure>
+
+<p>37.编写 SQL 语句，返回每个订单号（order_num）各有多少行数（order_lines），并按 order_lines对结果进行升序排序。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">select order_num,count(*) order_lines``</span><br><span class="line">from OrderItems``</span><br><span class="line">group by order_num``</span><br><span class="line">order by order_lines;</span><br></pre></td></tr></table></figure>
+
+<p>知识点：<br>1、count(*),count(列名)都可以，区别在于，count(列名)是统计非NULL的行数<br>2、order by最后执行，所以可以使用列别名<br><strong>3、分组聚合一定不要忘记加上 group by ,不然只会有一行结果</strong></p>
+<p>38.请从试卷作答记录表中找到SQL试卷得分不小于该类试卷平均得分的用户最低得分。</p>
+<p><code>select score min_score_over_avg</code></p>
+<p><code>from exam_record,examination_info</code></p>
+<p><code>where examination_info.tag=&#39;SQL&#39;</code></p>
+<p><code>and exam_record.exam_id = examination_info.exam_id</code></p>
+<p><code>and score&gt;=(</code>select<code> </code>avg(score)&#96; </p>
+<p>  <code>from exam_record , examination_info</code> </p>
+<p>  <code>where examination_info.tag = &#39;SQL&#39;</code></p>
+<p>  <code>and exam_record.exam_id = examination_info.exam_id``)</code></p>
+<p><code>order by score</code>    <code>limit 1</code></p>
+<p><strong>union</strong>:连接两表，会去重，效率较低</p>
+<p><strong>union all</strong>：连接两表，不去重，效率较高</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">SELECT EMP_ID, NAME, DEPT FROM COMPANY INNER JOIN DEPARTMENT</span><br><span class="line">   ON COMPANY.ID = DEPARTMENT.EMP_ID</span><br><span class="line">   UNION   //UNION ALL</span><br><span class="line">SELECT EMP_ID, NAME, DEPT FROM COMPANY LEFT OUTER JOIN DEPARTMENT</span><br><span class="line">    ON COMPANY.ID = DEPARTMENT.EMP_ID;</span><br></pre></td></tr></table></figure>
+
+<p><strong>触发器</strong>：触发器是与表有关的数据库对象，在满足定义条件时触发，并执行触发器中定义的语句集合。也就是由事件来触发某个操作，事件包括INSERT语句，UPDATE语句和DELETE语句；可以协助应用在数据库端确保数据的完整性。</p>
+<p><strong>1、创建触发器：</strong></p>
+<p>  1.创建只有一个执行语句的触发器</p>
+<blockquote>
+<p>例1：创建了一个名为trig1的触发器，一旦在work表中有插入动作，就会自动往time表里插入当前时间</p>
+<p>CREATE TRIGGER 触发器名 BEFORE|AFTER 触发事件 ON 表名 FOR EACH ROW 执行语句;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; CREATE TRIGGER trig1 AFTER INSERT</span><br><span class="line">    -&gt; ON work FOR EACH ROW</span><br><span class="line">    -&gt; INSERT INTO time VALUES(NOW());</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>  2.创建有多个执行语句的触发器</p>
+<blockquote>
+<p>CREATE TRIGGER 触发器名 BEFORE|AFTER 触发事件</p>
+<p>ON 表名 FOR EACH ROW</p>
+<p>BEGIN</p>
+<p>​    执行语句列表</p>
+<p>END;</p>
+<p>例2：定义一个触发器，一旦有满足条件的删除操作，就会执行BEGIN和END中的语句</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">trigger_time: &#123; BEFORE | AFTER &#125;//触发器触发时间</span><br><span class="line"></span><br><span class="line">trigger_event: &#123; INSERT | UPDATE | DELETE &#125;//触发器可以执行的三种操作</span><br><span class="line"></span><br><span class="line">trigger_order: &#123; FOLLOWS | PRECEDES &#125; other_trigger_name</span><br></pre></td></tr></table></figure>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; CREATE TRIGGER trig2 BEFORE DELETE</span><br><span class="line">    -&gt; ON work FOR EACH ROW</span><br><span class="line">    -&gt; BEGIN</span><br><span class="line">    -&gt; 　　INSERT INTO time VALUES(NOW());</span><br><span class="line">    -&gt; 　　INSERT INTO time VALUES(NOW());</span><br><span class="line">    -&gt; END||</span><br></pre></td></tr></table></figure>
+
+<p><strong>2、NEW与OLD详解</strong></p>
+<p>MySQL 中定义了 NEW 和 OLD，用来表示触发器的所在表中，触发了触发器的那一行数据，来引用触发器中发生变化的记录内容，具体地：</p>
+<p>　　①在INSERT型触发器中，NEW用来表示将要（BEFORE）或已经（AFTER）插入的新数据；</p>
+<p>　　②在UPDATE型触发器中，OLD用来表示将要或已经被修改的原数据，NEW用来表示将要或已经修改为的新数据；</p>
+<p>　　③在DELETE型触发器中，OLD用来表示将要或已经被删除的原数据；</p>
+<p>使用方法：</p>
+<p>　　NEW.columnName （columnName为相应数据表某一列名）</p>
+<p>另外，OLD是只读的，而NEW则可以在触发器中使用 SET 赋值，这样不会再次触发触发器，造成循环调用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; CREATE TRIGGER upd_check BEFORE UPDATE ON account</span><br><span class="line">    -&gt; FOR EACH ROW</span><br><span class="line">    -&gt; BEGIN</span><br><span class="line">    -&gt; 　　IF NEW.amount &lt; 0 THEN</span><br><span class="line">    -&gt; 　　　　SET NEW.amount = 0;</span><br><span class="line">    -&gt; 　　ELSEIF NEW.amount &gt; 100 THEN</span><br><span class="line">    -&gt; 　　　　SET NEW.amount = 100;</span><br><span class="line">    -&gt; 　　END IF;</span><br><span class="line">    -&gt; END$$</span><br></pre></td></tr></table></figure>
+
+<p><strong>3、查看触发器</strong></p>
+<p>(1)SHOW TRIGGERS语句查看触发器信息</p>
+<p>mysql&gt; SHOW TRIGGERS\G;</p>
+<p>……</p>
+<p>结果，显示所有触发器的基本信息；无法查询指定的触发器。</p>
+<p>(2)、在information_schema.triggers表中查看触发器信息</p>
+<p>mysql&gt; SELECT * FROM information_schema.triggers\G</p>
+<p><strong>4、删除触发器</strong></p>
+<p><em>DROP TRIGGER [IF EXISTS] [schema_name.]trigger_name</em></p>
+<p><strong>创建数据库</strong>：CREATE DATABASE dbname;</p>
+<p><strong>删除数据库</strong>：DROP DATABASE [ IF EXISTS ] name</p>
+<p><strong>创建表格</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE table_name(</span><br><span class="line">   column1 datatype,</span><br><span class="line">   column2 datatype,</span><br><span class="line">   column3 datatype,</span><br><span class="line">   .....</span><br><span class="line">   columnN datatype,</span><br><span class="line">   PRIMARY KEY( 一个或多个列 )</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p><strong>删除表格</strong>：DROP TABLE IF EXISTS   table_name;</p>
+<p><strong>增删改查</strong>：INSERT  DELETE&#x2F;TRUNCAT  UPDATE   SELECT</p>
+<p>   (1**)增加表中数据**：INSERT INTO…VALUES…</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO TABLE_NAME (column1, column2, column3,...columnN)</span><br><span class="line">VALUES (value1, value2, value3,...valueN);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>嵌套增加</strong></li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO table_name [ (column1 [, column2 ]) ]</span><br><span class="line">   SELECT [ *|column1 [, column2 ] ]</span><br><span class="line">   FROM table1 [, table2 ]</span><br><span class="line">   [ WHERE VALUE OPERATOR ]</span><br></pre></td></tr></table></figure>
+
+<p><strong>（2)删除表中数据：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DELETE FROM table_name WHERE [condition];</span><br></pre></td></tr></table></figure>
+
+<p>或</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">TRUNCATE TABLE  table_name;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>嵌套</strong></li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">DELETE FROM TABLE_NAME</span><br><span class="line">[ WHERE OPERATOR [ VALUE ]</span><br><span class="line">   (SELECT COLUMN_NAME</span><br><span class="line">   FROM TABLE_NAME)</span><br><span class="line">   [ WHERE) ]</span><br></pre></td></tr></table></figure>
+
+
+
+<p>(3)<strong>更新&#x2F;修改表中数据</strong>：UPDATE 表名 SET … WHERE…</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">UPDATE table_name</span><br><span class="line">SET column1 = value1, column2 = value2...., columnN = valueN</span><br><span class="line">WHERE [condition];</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>嵌套</strong></li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">UPDATE table</span><br><span class="line">SET column_name = new_value</span><br><span class="line">[ WHERE OPERATOR [ VALUE ]</span><br><span class="line">   (SELECT COLUMN_NAME</span><br><span class="line">   FROM TABLE_NAME)</span><br><span class="line">   [ WHERE) ]</span><br></pre></td></tr></table></figure>
+
+<p>ALTER TABLE 语句用于在已有的表中添加、删除或修改列。</p>
+<p><strong>alter add;添加列 alter change;改列名 alter modify;修改列数据类型</strong></p>
+<p><strong>如需在表中添加列，请使用下面的语法:</strong></p>
+<p>ALTER TABLE table_name<br>ADD column_name datatype</p>
+<p><strong>如需删除表中的列，请使用下面的语法</strong>（请注意，某些数据库系统不允许这种在数据库表中删除列的方式）：</p>
+<p>ALTER TABLE table_name<br>DROP COLUMN column_name</p>
+<p><strong>要改变表中列的数据类型，请使用下面的语法：</strong></p>
+<p>ALTER TABLE table_name<br>MODIFY COLUMN column_name datatype         </p>
+<p>(4)<strong>查找表中数据</strong>：SELECT…FROM…</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT column1, column2,...columnN FROM table_name;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>嵌套子查询</strong></li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SELECT column_name [, column_name ]</span><br><span class="line">FROM   table1 [, table2 ]</span><br><span class="line">WHERE  column_name OPERATOR</span><br><span class="line">      (SELECT column_name [, column_name ]</span><br><span class="line">      FROM table1 [, table2 ]</span><br><span class="line">      [WHERE])</span><br></pre></td></tr></table></figure>
+
+<p>例：</p>
+<p><strong>1.带in的子查询</strong></p>
+<p><code>select sno, sname</code><br><code>from student</code><br><code>where sno in (select sno from sc where cno=&#39;C001&#39;);</code></p>
+<p><strong>2.带比较运算符的子查询</strong></p>
+<p><code>select cno from sc as x</code><br><code>where score &gt;</code><br><code>(</code><br>    <code>select avg(score) from sc as y where x.sno=y.sno and x.sno = &#39;2016110129&#39;</code><br><code>)</code><br><code>and sno = &#39;2016110129&#39;;</code></p>
+<p><strong>3.带any（some）或all的子查询</strong></p>
+<p><code>select cno from sc</code><br><code>group by cno</code><br><code>having COUNT(*) &gt;= all(select COUNT(*) from sc group by cno);</code></p>
+<p><strong>4.带exists的子查询</strong></p>
+<p><code>#列出选修了C001课程的学生的学号、姓名</code><br><code>select sno,sname from student</code><br><code>where exists(</code><br><code>select * from sc where sc.sno=student.sno and cno=&#39;C001&#39;</code><br><code>);</code></p>
+<p>5.<strong>基于派生表的查询</strong></p>
+<p><code>select sc.sno,total_cre,avg(score) from</code><br>    <code>(select sc``， sno,SUM(ceredit) as total_cre from sc,course``` where sc.cno=course.cno</code><br>    <code>and score &gt;= 60</code><br>    <code>group by sno</code><br>    <code>having SUM(ceredit) &gt;= 8) as temptable </code>&#x2F;&#x2F;一定要取别名！</p>
+<p><code> </code>where temptable.sno&#x3D;sc.sno<code>  </code>group by sc.sno,sum_cre;&#96;</p>
+<p>&#x2F;&#x2F;有select 后面接子查询；也有from后面接子查询(相当于试图)，最后要其别名</p>
+<ul>
+<li><strong>where型子查询：</strong>把内层查询的结果作为外层查询的比较条件</li>
+</ul>
+<p>​         (1)SELECT goods_id,goods_name,shop_price </p>
+<p>​             FROM goods </p>
+<p>​            WHERE goods_id <strong>&#x3D; (SELECT MAX(goods_id) FROM goods)</strong></p>
+<p>​        (2)SELECT goods_id,goods_name,cat_id,shop_price</p>
+<p>​             FROM goods </p>
+<p>​             WHERE goods_id <strong>IN (SELECT MAX(goods_id) FROM goods GROUP BY cat_id);</strong></p>
+<ul>
+<li><p><strong>from型子查询：</strong>把内层的查询结果当成临时表，供外层sql再次查询。查询结果集可以当成表看待。临时表要使用一个别名</p>
+<p> (1) SELECT goods_id,goods_name,cat_id,shop_price</p>
+<p>​      FROM <strong>(SELECT goods_id,goods_name,cat_id,shop_price</strong> </p>
+<p>​             <strong>FROM goods</strong> </p>
+<p>​             <strong>ORDER BY cat_id ASC,goods_id DESC) AS tmp</strong></p>
+<p>　  GROUP BY cat_id;</p>
+</li>
+</ul>
+<p><strong>连接：union &#x2F;union all</strong></p>
+<p>**union:**连接两表，去重，效率低          </p>
+<p>**union all:**连接两表，不去重，效率高  </p>
+<p> <strong>&#x2F;&#x2F;使用union以后 上下语句只能使用一个order by</strong></p>
+<p><code>SELECT cust_name, cust_contact, cust_email</code> </p>
+<p><code>FROM Customers</code> </p>
+<p><code>WHERE cust_state = &#39;MI&#39;</code> </p>
+<ul>
+<li>ORDER BY cust_name;  ×          &#x2F;&#x2F;不能在此使用order by</li>
+</ul>
+<p><code>UNION</code> </p>
+<p><code>SELECT cust_name, cust_contact, cust_email</code> </p>
+<p><code>FROM Customers</code> </p>
+<p><code>WHERE cust_state = &#39;IL&#39;</code></p>
+<p><code>ORDER BY cust_name;</code></p>
+<p><strong>group by用法:</strong></p>
+<ol>
+<li><strong>当select使用了聚合函数时，只会产生一个数据，若要产生多个数据，则后面需加个group by</strong></li>
+</ol>
+<p>GROUP BY 叙述句搭配聚合函数 (aggregation function) 使用，是用来将查询结果中特定栏位值相同的资料分为若干个群组，而每一个群组都会传回一个资料列。若没有使用 GROUP BY，聚合函数针对一个 SELECT 查询，只会返回一个汇总值。</p>
+<p><code>select  prod_name,count(OrderItems.prod_id) orders</code></p>
+<p><code>from Products p</code></p>
+<p><code>left join OrderItems</code> </p>
+<p><code>on p.prod_id=OrderItems.prod_id</code></p>
+<p><code>group by prod_name</code>         &#x2F;&#x2F;无这个则输出只有一个</p>
+<p><code>order by prod_name</code></p>
+<p>  <strong>2.去重，代替distinct去重</strong></p>
+<p>各种函数：</p>
+<ol>
+<li><p><strong>timestampdiff(minute, begin, end)</strong>   算时间</p>
+<p>例&#x2F;timestampdiff(minute,start_time,submit_time)&lt;5</p>
+<p>2.<strong>if(condition, value_if_true, value_if_false)</strong>  条件函数</p>
+<p>例if(score is null,0,score)</p>
+<p>3.<strong>round(x,d)</strong>  ，x指要处理的数，d是指保留几位小数</p>
+<p>例round(**sum(if(score is null,0,score))&#x2F;count(uid) **, 0 ) </p>
+<p>round(x)  ,其实就是round(x,0),也就是默认d为0</p>
+<p>4.<strong>char_length(s)</strong>	返回字符串 s 的字符长度</p>
+<p>5.<strong>concat(s1,s2…sn)</strong>	字符串 s1,s2 ..sn等多个字符串合并为一个字符串</p>
+<p>例 CONCAT(substring(nick_name,1,10),”…”)  nick_name前10个字符和 ‘…’拼接</p>
+<p>6.<strong>left(s,n)</strong>	返回字符串 s 的前 n 个字符 </p>
+<p>7.<strong>RIGHT(s,n)</strong>	返回字符串 s 的后 n 个字符</p>
+<p>8.<strong>replace(s,s1,s2)</strong>	将字符串 s2 替代字符串 s 中的字符串 s1</p>
+<p>9.<strong>reverse(s)</strong>	将字符串s的顺序反过来</p>
+<p>10.<strong>substr(s, start, length)</strong>	从字符串 s 的 start 位置截取长度为 length 的子字符串11.<strong>substring(s, start, length)</strong>	从字符串 s 的 start 位置截取长度为 length 的子字符串，等同于         SUBSTR(s, start, length)</p>
+</li>
+</ol>
+<p>  12.<strong>date_format(d,f)</strong>	按表达式 f的要求显示日期 d </p>
+<p>   例  date_format(start_time, ‘%Y-%m-%d %H:%i:%s’)</p>
+<ol start="13">
+<li><p><strong>day(d)&#x2F;month(d)&#x2F;year(d)</strong>	返回日期值 d 的日期部分&#x2F;月份&#x2F;年份   &#x2F;&#x2F;DAY(“2017-06-15”)</p>
+</li>
+<li><p><strong>count()</strong>:  count(1)    1代表这个表达式不为 NULL 的记录   count(*)   count(字段)</p>
+</li>
+<li><p><strong>sum(if( )) 、count(if( ))</strong></p>
+<p><strong>sum(if(fenlei&#x3D;’分类1’,1,0))  A</strong></p>
+<p>即：如果是’分类1’的则返回1，否则返回0，对返回辅助列进行求和,得到符合此条件的数据的总和</p>
+<p>满足条件的对象求和，即统计<code>1</code>的数量</p>
+<p><strong>count(if(fenlei&#x3D;’分类2’,1,0)) B</strong></p>
+<p>即：如果是’分类2’的则返回1，否则返回0，但是因为都有数值，count对所有有值的列进行计数</p>
+<p>无视条件求和，即统计<code>0</code>或者<code>1</code>的数量</p>
+</li>
+</ol>
+<p><strong>case..when语句：</strong>CASE</p>
+<p>​     WHEN SCORE &#x3D; ‘A’ THEN ‘优’<br>​     WHEN SCORE &#x3D; ‘B’ THEN ‘良’<br>​     WHEN SCORE &#x3D; ‘C’ THEN ‘中’</p>
+<p>​      ELSE ‘不及格’ </p>
+<p>END</p>
+<p>例：SELECT    STUDENT_NAME,   </p>
+<p> (CASE </p>
+<p>WHEN score &lt; 60 THEN ‘不及格’        </p>
+<p>WHEN score &gt;&#x3D; 60 AND score &lt; 80 THEN ‘及格’     </p>
+<p>WHEN score &gt;&#x3D; 80 THEN ‘優秀’     </p>
+<p>ELSE ‘異常’ </p>
+<p>END) AS REMARK  FROM    TABLE</p>
+<p><strong>with语句：给子查询语句取别名，下次就能直接取。</strong></p>
+<p>with u1 as</p>
+<p> (select id, sum(amount) as num from pay where pay_time &gt;&#x3D; 1493568000 and pay_time &lt; 1494172800 group by id), </p>
+<p>u2 as(select id, sum(amount) as total from pay where pay_time &lt; 1494172800 group by id) </p>
+<p>select u1.id, pinfo.sid, u1.num, u2.total from u1, u2, pinfo where u2.id &#x3D; u1.id and pinfo.id &#x3D; u1.id;</p>
+<p>窗口函数：<strong>窗口函数原则上只能写在select子句中</strong></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;窗口函数&gt; over (partition by &lt;用于分组的列名&gt;</span><br><span class="line">                order by &lt;用于排序的列名&gt;)</span><br></pre></td></tr></table></figure>
+
+<p>(1)专用窗口函数：rank, dense_rank, row_number</p>
+<p><strong>例：select   row_number() over(partition by Uid  order by score) as A</strong></p>
+<p>&#x2F;&#x2F;在原表的基础上再加一列，普通聚合函数只是查询出某列</p>
+<p>(2)聚合函数：sum. avg, count, max, min</p>
+<p><strong>例：select sum(salary) over( partition by Uid order by score ) as B</strong></p>
+<p>​        <strong>salary&#x2F;sum(salary) over( ) as B</strong></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/07/13/shell%E7%AC%94%E8%AE%B0/" rel="prev" title="">
+      <i class="fa fa-chevron-left"></i> 
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Olstussy"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Olstussy</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2023.7.13 – 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Olstussy</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
