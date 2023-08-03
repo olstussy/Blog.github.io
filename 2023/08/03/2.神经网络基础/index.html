@@ -1,0 +1,282 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>AI笔记（2）：神经网络基础 | Olstussy</title><meta name="author" content="Olstussy"><meta name="copyright" content="Olstussy"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="1.算法基础与逻辑回归逻辑回归(Logistic regression) 是一个用于二分类的算法。 1.1 二分类问题与机器学习基础二分类就是输出  只有 {0,1} 两个离散值(也有 {-1,1} 的情况)。我们以一个「图像识别」问题为例，判断图片是否是猫。识别是否是「猫」，这是一个典型的二分类问题——0代表「非猫(not cat)」，1代表「猫(cat)」。  从机器学习的角度看，我们的输入">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AI笔记（2）：神经网络基础">
+<meta property="og:url" content="http://example.com/2023/08/03/2.%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/index.html">
+<meta property="og:site_name" content="Olstussy">
+<meta property="og:description" content="1.算法基础与逻辑回归逻辑回归(Logistic regression) 是一个用于二分类的算法。 1.1 二分类问题与机器学习基础二分类就是输出  只有 {0,1} 两个离散值(也有 {-1,1} 的情况)。我们以一个「图像识别」问题为例，判断图片是否是猫。识别是否是「猫」，这是一个典型的二分类问题——0代表「非猫(not cat)」，1代表「猫(cat)」。  从机器学习的角度看，我们的输入">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2023/08/02/UOWRIZPuaAX81yL.jpg">
+<meta property="article:published_time" content="2023-08-03T04:41:07.000Z">
+<meta property="article:modified_time" content="2023-08-03T15:35:13.066Z">
+<meta property="article:author" content="Olstussy">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="机器学习">
+<meta property="article:tag" content="深度学习">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2023/08/02/UOWRIZPuaAX81yL.jpg"><link rel="shortcut icon" href="/img/favicon-32x32-next.png"><link rel="canonical" href="http://example.com/2023/08/03/2.%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'AI笔记（2）：神经网络基础',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-08-03 23:35:13'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s2.loli.net/2023/08/02/UOWRIZPuaAX81yL.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">10</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://s2.loli.net/2023/08/02/n2kWORi8zyCmNXH.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Olstussy"><span class="site-name">Olstussy</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">AI笔记（2）：神经网络基础</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-08-03T04:41:07.000Z" title="发表于 2023-08-03 12:41:07">2023-08-03</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-08-03T15:35:13.066Z" title="更新于 2023-08-03 23:35:13">2023-08-03</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/AI/">AI</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="AI笔记（2）：神经网络基础"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="1-算法基础与逻辑回归"><a href="#1-算法基础与逻辑回归" class="headerlink" title="1.算法基础与逻辑回归"></a>1.算法基础与逻辑回归</h2><p><a target="_blank" rel="noopener" href="https://www.showmeai.tech/article-detail/188"><strong>逻辑回归</strong>(Logistic regression)</a> 是一个用于二分类的算法。</p>
+<h3 id="1-1-二分类问题与机器学习基础"><a href="#1-1-二分类问题与机器学习基础" class="headerlink" title="1.1 二分类问题与机器学习基础"></a>1.1 二分类问题与机器学习基础</h3><p>二分类就是输出 <img src="https://www.zhihu.com/equation?tex=y" alt="公式"> 只有 {0,1} 两个离散值(也有 {-1,1} 的情况)。我们以一个「<strong>图像识别</strong>」问题为例，判断图片是否是猫。识别是否是「猫」，这是一个典型的二分类问题——0代表「非猫(not cat)」，1代表「猫(cat)」。</p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/7d23dfda65d2602bc638fa9b6ffda70e.png" alt="算法基础与逻辑回归"></p>
+<p>从机器学习的角度看，我们的输入 <img src="https://www.zhihu.com/equation?tex=x" alt="公式"> 此时是一张图片，彩色图片包含RGB三个通道，图片尺寸为 <img src="https://www.zhihu.com/equation?tex=(64,64,3)" alt="公式">。</p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/5d0357642ea81c50a4942eeedcd12601.png" alt="数据与向量化格式"></p>
+<p>有些神经网络的输入是一维的，我们可以将图片 <img src="https://www.zhihu.com/equation?tex=x" alt="公式"> (维度 <img src="https://www.zhihu.com/equation?tex=(64,64,3)" alt="公式"> )展平为一维特征向量(feature vector)，得到的特征向量维度为 <img src="https://www.zhihu.com/equation?tex=(12288,1)" alt="公式">。我们一般用列向量表示样本，把维度记为 <img src="https://www.zhihu.com/equation?tex=n_x" alt="公式">。</p>
+<p>如果训练样本有 <img src="https://www.zhihu.com/equation?tex=m" alt="公式"> 张图片，那么我们用矩阵存储数据，此时数据维度变为 <img src="https://www.zhihu.com/equation?tex=(n_x,m)" alt="公式">。</p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/f849e82bf0e6d760480dcb4e469a1aed.png" alt="数据与向量化格式"></p>
+<ul>
+<li>矩阵 <img src="https://www.zhihu.com/equation?tex=X" alt="公式"> 的行 <img src="https://www.zhihu.com/equation?tex=n_x" alt="公式"> 代表了每个样本 <img src="https://www.zhihu.com/equation?tex=x%5E%7B(i)%7D" alt="公式"> 特征个数</li>
+<li>矩阵 <img src="https://www.zhihu.com/equation?tex=X" alt="公式"> 的列 <img src="https://www.zhihu.com/equation?tex=m" alt="公式"> 代表了样本个数。</li>
+</ul>
+<p>我们可以对训练样本的标签 <img src="https://www.zhihu.com/equation?tex=Y" alt="公式"> 也做一个规整化，调整为1维的形态，标签 <img src="https://www.zhihu.com/equation?tex=Y" alt="公式"> 的维度为 <img src="https://www.zhihu.com/equation?tex=(1,m)" alt="公式">。</p>
+<h3 id="1-2-逻辑回归算法"><a href="#1-2-逻辑回归算法" class="headerlink" title="1.2 逻辑回归算法"></a>1.2 逻辑回归算法</h3><p>逻辑回归是最常见的二分类算法，它包含以下参数：</p>
+<ul>
+<li>输入的特征向量： <img src="https://www.zhihu.com/equation?tex=x%20%5Cin%20R%5E%7Bn_x%7D" alt="公式">，其中 <img src="https://www.zhihu.com/equation?tex=%7Bn_x%7D" alt="公式"> 是特征数量</li>
+<li>用于训练的标签： <img src="https://www.zhihu.com/equation?tex=y%20%5Cin%200,1" alt="公式"></li>
+<li>权重： <img src="https://www.zhihu.com/equation?tex=w%20%5Cin%20R%5E%7Bn_x%7D" alt="公式"></li>
+<li>偏置： <img src="https://www.zhihu.com/equation?tex=b%20%5Cin%20R" alt="公式"></li>
+<li>输出： <img src="https://www.zhihu.com/equation?tex=%5Chat%7By%7D%20=%20%5Csigma(w%5ETx+b)" alt="公式"></li>
+</ul>
+<p>输出计算用到了Sigmoid函数，它是一种非线性的S型函数，输出被限定在 <img src="https://www.zhihu.com/equation?tex=%5B0,1%5D" alt="公式"> 之间，通常被用在神经网络中当作激活函数(Activation Function)使用。</p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/469497535f2f8c0e7621b19954e89e1a.png" alt="逻辑回归做图像分类"></p>
+<p>Sigmoid函数的表达式如下：</p>
+<p><img src="https://www.zhihu.com/equation?tex=s%20=%20%5Csigma(w%5ETx+b)%20=%20%5Csigma(z)%20=%20%5Cfrac%7B1%7D%7B1+e%5E%7B-z%7D%7D" alt="公式"></p>
+<p>实际上，逻辑回归可以看作非常小的一个神经网络。</p>
+<h3 id="1-3-逻辑回归的损失函数"><a href="#1-3-逻辑回归的损失函数" class="headerlink" title="1.3 逻辑回归的损失函数"></a>1.3 逻辑回归的损失函数</h3><p><img src="https://img-blog.csdnimg.cn/img_convert/cfdb63c3f40566dd3eb449791bebcbf1.png" alt="逻辑回归的代价函数 Logistic Regression Cost Function"></p>
+<p>在机器学习中，**损失函数(loss function)**用于量化衡量预测结果与真实值之间的差距，我们会通过优化损失函数来不断调整模型权重，使其最好地拟合样本数据。</p>
+<p>在回归类问题中，我们会使用均方差损失(MSE)：</p>
+<p><img src="https://www.zhihu.com/equation?tex=L(%5Chat%7By%7D,y)%20=%20%5Cfrac%7B1%7D%7B2%7D(%5Chat%7By%7D-y)%5E2" alt="公式"></p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/35b403930fdd2e18120c284b77cacad2.png" alt="逻辑回归的损失函数"></p>
+<p>但是在逻辑回归中，我们并不倾向于使用这样的损失函数。逻辑回归使用平方差损失会得到非凸的损失函数，它会有很多个局部最优解。梯度下降法可能找不到全局最优值，从而给优化带来困难。</p>
+<p>因此我们调整成使用对数损失(二元交叉熵损失)：</p>
+<p><img src="https://www.zhihu.com/equation?tex=L(%5Chat%7By%7D,y)%20=%20-(y%5Clog%5Chat%7By%7D)+(1-y)%5Clog(1-%5Chat%7By%7D)" alt="公式"></p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/82e431bdd18d9e3d68a48bc952c566d6.png" alt="逻辑回归的损失函数"></p>
+<p>刚才我们给到的是单个训练样本中定义的损失函数，它衡量了在单个训练样本上的表现。我们定义<strong>代价函数</strong>(Cost Function，或者称作成本函数)为全体训练样本上的表现，即 <img src="https://www.zhihu.com/equation?tex=m" alt="公式"> 个样本的损失函数的平均值，反映了 <img src="https://www.zhihu.com/equation?tex=m" alt="公式"> 个样本的预测输出与真实样本输出 <img src="https://www.zhihu.com/equation?tex=y" alt="公式"> 的平均接近程度。</p>
+<p>成本函数的计算公式如下：</p>
+<p><img src="https://www.zhihu.com/equation?tex=J(w,b)%20=%20%5Cfrac%7B1%7D%7Bm%7D%5Csum_%7Bi=1%7D%5EmL(%5Chat%7By%7D%5E%7B(i)%7D,y%5E%7B(i)%7D)" alt="公式"></p>
+<h2 id="2-梯度下降法-Gradient-Descent"><a href="#2-梯度下降法-Gradient-Descent" class="headerlink" title="2.梯度下降法(Gradient Descent)"></a>2.梯度下降法(Gradient Descent)</h2><p><img src="https://img-blog.csdnimg.cn/img_convert/29c24cd29c1e9cd7cecdf80e74c87d49.png" alt="梯度下降 Gradient Descent"></p>
+<p>刚才我们了解了损失函数(Loss Function)与成本函数定义，下一步我们就要找到最优的 <img src="https://www.zhihu.com/equation?tex=w" alt="公式"> 和 <img src="https://www.zhihu.com/equation?tex=b" alt="公式"> 值，最小化 <img src="https://www.zhihu.com/equation?tex=m" alt="公式"> 个训练样本的Cost Function。这里用到的方法就叫做<strong>梯度下降</strong>(<strong>Gradient Descent</strong>)算法。</p>
+<p>在数学上，1个函数的梯度(gradient)指出了它的最陡增长方向。也就是说，沿着梯度的方向走，函数增长得就最快。那么沿着梯度的负方向走，函数值就下降得最快。</p>
+<p>模型的训练目标是寻找合适的 <img src="https://www.zhihu.com/equation?tex=w" alt="公式"> 与 <img src="https://www.zhihu.com/equation?tex=b" alt="公式"> 以最小化代价函数值。我们先假设 <img src="https://www.zhihu.com/equation?tex=w" alt="公式"> 与 <img src="https://www.zhihu.com/equation?tex=b" alt="公式"> 都是一维实数，则代价函数 <img src="https://www.zhihu.com/equation?tex=J" alt="公式"> 关于 <img src="https://www.zhihu.com/equation?tex=w" alt="公式"> 与 <img src="https://www.zhihu.com/equation?tex=b" alt="公式"> 的图如下所示：</p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/34aa5f085eef1115e72c7d81d6920c3e.png" alt="梯度下降法"></p>
+<p>上图中的代价函数 <img src="https://www.zhihu.com/equation?tex=J" alt="公式"> 是一个<strong>凸函数</strong>，只有一个全局最低点，它能保证无论我们初始化模型参数如何(在曲面上任何位置)，都能够寻找到合适的最优解。</p>
+<p>基于梯度下降算法，得到以下参数 <img src="https://www.zhihu.com/equation?tex=w" alt="公式"> 的更新公式：</p>
+<p><img src="https://www.zhihu.com/equation?tex=w%20:=%20w%20-%20%5Calpha%5Cfrac%7BdJ(w,%20b)%7D%7Bdw%7D" alt="公式"></p>
+<p>公式中 <img src="https://www.zhihu.com/equation?tex=%5Calpha" alt="公式"> 为学习率，即每次更新的 <img src="https://www.zhihu.com/equation?tex=w" alt="公式"> 的步长。</p>
+<p>成本函数 <img src="https://www.zhihu.com/equation?tex=J(w,%20b)" alt="公式"> 中对应的参数 <img src="https://www.zhihu.com/equation?tex=b" alt="公式"> 更新公式为：</p>
+<p><img src="https://www.zhihu.com/equation?tex=b%20:=%20b%20-%20%5Calpha%5Cfrac%7BdJ(w,%20b)%7D%7Bdb%7D" alt="公式"></p>
+<h2 id="3-计算图-Computation-Graph"><a href="#3-计算图-Computation-Graph" class="headerlink" title="3.计算图(Computation Graph)"></a>3.计算图(Computation Graph)</h2><p><img src="https://img-blog.csdnimg.cn/img_convert/f3a19232b166eb3d3967377d060ceb7a.png" alt="计算图 Computation Graph"></p>
+<p>对于神经网络而言，训练过程包含了两个阶段：前向传播(Forward Propagation)和反向传播(Back Propagation)。</p>
+<ul>
+<li>前向传播是从输入到输出，由神经网络前推计算得到预测输出的过程</li>
+<li>反向传播是从输出到输入，基于Cost Function对参数 <img src="https://www.zhihu.com/equation?tex=w" alt="公式"> 和 <img src="https://www.zhihu.com/equation?tex=b" alt="公式"> 计算梯度的过程。</li>
+</ul>
+<p>下面，我们结合一个例子用计算图(Computation graph)的形式来理解这两个阶段。</p>
+<h3 id="3-1-前向传播-Forward-Propagation"><a href="#3-1-前向传播-Forward-Propagation" class="headerlink" title="3.1 前向传播(Forward Propagation)"></a>3.1 前向传播(Forward Propagation)</h3><p>假如我们的Cost Function为 <img src="https://www.zhihu.com/equation?tex=J(a,b,c)=3(a+bc)" alt="公式">，包含 <img src="https://www.zhihu.com/equation?tex=a" alt="公式"> 、 <img src="https://www.zhihu.com/equation?tex=b" alt="公式"> 、 <img src="https://www.zhihu.com/equation?tex=c" alt="公式"> 三个变量。</p>
+<p>我们添加一些中间变量，用 <img src="https://www.zhihu.com/equation?tex=u" alt="公式"> 表示 <img src="https://www.zhihu.com/equation?tex=bc" alt="公式">， <img src="https://www.zhihu.com/equation?tex=v" alt="公式"> 表示 <img src="https://www.zhihu.com/equation?tex=a+u" alt="公式">，则 <img src="https://www.zhihu.com/equation?tex=J=3v" alt="公式">。</p>
+<p>整个过程可以用计算图表示：</p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/ccc03bc0b2b89bf22d69b9f556373660.png" alt="计算图"></p>
+<p>在上图中，我们让 <img src="https://www.zhihu.com/equation?tex=a=5" alt="公式">， <img src="https://www.zhihu.com/equation?tex=b=3" alt="公式">， <img src="https://www.zhihu.com/equation?tex=c=2" alt="公式">，则 <img src="https://www.zhihu.com/equation?tex=u=bc=6" alt="公式">， <img src="https://www.zhihu.com/equation?tex=v=a+u=11" alt="公式">， <img src="https://www.zhihu.com/equation?tex=J=3v=33" alt="公式">。</p>
+<p>计算图中，这种从左到右，从输入到输出的过程，就对应着神经网络基于 <img src="https://www.zhihu.com/equation?tex=x" alt="公式"> 和 <img src="https://www.zhihu.com/equation?tex=w" alt="公式"> 计算得到Cost Function的前向计算过程。</p>
+<h3 id="3-2-反向传播-Back-Propagation"><a href="#3-2-反向传播-Back-Propagation" class="headerlink" title="3.2 反向传播(Back Propagation)"></a>3.2 反向传播(Back Propagation)</h3><p><img src="https://img-blog.csdnimg.cn/img_convert/f658c4007b0b0c4d35a076daf27ea248.png" alt="计算图导数 Derivatives with a Computation Graph"></p>
+<p>我们接着上个例子中的计算图讲解反向传播，我们的输入参数有 <img src="https://www.zhihu.com/equation?tex=a" alt="公式"> 、 <img src="https://www.zhihu.com/equation?tex=b" alt="公式"> 、 <img src="https://www.zhihu.com/equation?tex=c" alt="公式"> 三个。</p>
+<p>① <strong>先计算 <img src="https://www.zhihu.com/equation?tex=J" alt="公式"> 对参数 <img src="https://www.zhihu.com/equation?tex=a" alt="公式"> 的偏导数</strong></p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/2011ffd4edca39d6e0535b2287a238c6.png" alt="计算图"></p>
+<p>从计算图上来看，从右到左， <img src="https://www.zhihu.com/equation?tex=J" alt="公式"> 是 <img src="https://www.zhihu.com/equation?tex=v" alt="公式"> 的函数， <img src="https://www.zhihu.com/equation?tex=v" alt="公式"> 是 <img src="https://www.zhihu.com/equation?tex=a" alt="公式"> 的函数。基于求导链式法则得到：</p>
+<p><img src="https://www.zhihu.com/equation?tex=%5Cfrac%7B%5Cpartial%20J%7D%7B%5Cpartial%20a%7D=%5Cfrac%7B%5Cpartial%20J%7D%7B%5Cpartial%20v%7D%5Ccdot%20%5Cfrac%7B%5Cpartial%20v%7D%7B%5Cpartial%20a%7D=3%5Ccdot%201=3" alt="公式"></p>
+<p>② <strong>计算 <img src="https://www.zhihu.com/equation?tex=J" alt="公式"> 对参数 <img src="https://www.zhihu.com/equation?tex=b" alt="公式"> 的偏导数</strong></p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/f9875c26024de75278c3682242471803.png" alt="计算图"></p>
+<p>从计算图上来看，从右到左， <img src="https://www.zhihu.com/equation?tex=J" alt="公式"> 是 <img src="https://www.zhihu.com/equation?tex=v" alt="公式"> 的函数， <img src="https://www.zhihu.com/equation?tex=v" alt="公式"> 是 <img src="https://www.zhihu.com/equation?tex=u" alt="公式"> 的函数， <img src="https://www.zhihu.com/equation?tex=u" alt="公式"> 是 <img src="https://www.zhihu.com/equation?tex=b" alt="公式"> 的函数。同样可得：</p>
+<p><img src="https://www.zhihu.com/equation?tex=%5Cfrac%7B%5Cpartial%20J%7D%7B%5Cpartial%20b%7D=%5Cfrac%7B%5Cpartial%20J%7D%7B%5Cpartial%20v%7D%5Ccdot%20%5Cfrac%7B%5Cpartial%20v%7D%7B%5Cpartial%20u%7D%5Ccdot%20%5Cfrac%7B%5Cpartial%20u%7D%7B%5Cpartial%20b%7D=3%5Ccdot%201%5Ccdot%20c=3%5Ccdot%201%5Ccdot%202=6" alt="公式"></p>
+<p>③ <strong>计算 <img src="https://www.zhihu.com/equation?tex=J" alt="公式"> 对参数 <img src="https://www.zhihu.com/equation?tex=c" alt="公式"> 的偏导数</strong></p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/24ad6820ce5d47507d6c3627fef30742.png" alt="计算图"></p>
+<p>此时从右到左， <img src="https://www.zhihu.com/equation?tex=J" alt="公式"> 是 <img src="https://www.zhihu.com/equation?tex=v" alt="公式"> 的函数， <img src="https://www.zhihu.com/equation?tex=v" alt="公式"> 是 <img src="https://www.zhihu.com/equation?tex=u" alt="公式"> 的函数， <img src="https://www.zhihu.com/equation?tex=u" alt="公式"> 是 <img src="https://www.zhihu.com/equation?tex=c" alt="公式"> 的函数。可得：</p>
+<p><img src="https://www.zhihu.com/equation?tex=%5Cfrac%7B%5Cpartial%20J%7D%7B%5Cpartial%20c%7D=%5Cfrac%7B%5Cpartial%20J%7D%7B%5Cpartial%20v%7D%5Ccdot%20%5Cfrac%7B%5Cpartial%20v%7D%7B%5Cpartial%20u%7D%5Ccdot%20%5Cfrac%7B%5Cpartial%20u%7D%7B%5Cpartial%20c%7D=3%5Ccdot%201%5Ccdot%20b=3%5Ccdot%201%5Ccdot%203=9" alt="公式"></p>
+<p>这样就完成了从右往左的反向传播与梯度(偏导)计算过程。</p>
+<h2 id="4-逻辑回归中的梯度下降法"><a href="#4-逻辑回归中的梯度下降法" class="headerlink" title="4.逻辑回归中的梯度下降法"></a>4.逻辑回归中的梯度下降法</h2><p><img src="https://img-blog.csdnimg.cn/img_convert/560b7f3519cb6d3dff8dc079d493054d.png" alt="逻辑回归的梯度下降 Logistic Regression Gradient Descent"></p>
+<p>回到我们前面提到的逻辑回归问题，我们假设输入的特征向量维度为2(即 <img src="https://www.zhihu.com/equation?tex=%5Bx_1,%20x_2%5D" alt="公式"> )，对应权重参数 <img src="https://www.zhihu.com/equation?tex=w_1" alt="公式"> 、 <img src="https://www.zhihu.com/equation?tex=w_2" alt="公式"> 、 <img src="https://www.zhihu.com/equation?tex=b" alt="公式"> 得到如下的计算图：</p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/c9201f61badc2bd794dfd4fe6052e01c.png" alt="逻辑回归中的梯度下降法"></p>
+<h4 id="反向传播计算梯度"><a href="#反向传播计算梯度" class="headerlink" title="反向传播计算梯度"></a>反向传播计算梯度</h4><p>① <strong>求出 <img src="https://www.zhihu.com/equation?tex=L" alt="公式"> 对于 <img src="https://www.zhihu.com/equation?tex=a" alt="公式"> 的导数</strong></p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/bc229a0e811de31858ef4454d73e6692.png" alt="逻辑回归中的梯度下降法"></p>
+<p>② <strong>求出 <img src="https://www.zhihu.com/equation?tex=L" alt="公式"> 对于 <img src="https://www.zhihu.com/equation?tex=z" alt="公式"> 的导数</strong></p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/73c19076db20a22d549d531db5fb2dfb.png" alt="逻辑回归中的梯度下降法"></p>
+<p>③ <strong>继续前推计算</strong></p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/fbc8345a74488feb08c99f23f07d12ff.png" alt="逻辑回归中的梯度下降法"></p>
+<p>④ <strong>基于梯度下降可以得到参数更新公式</strong></p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/557bae9c5d002d787203645e6db4f99b.png" alt="逻辑回归中的梯度下降法"></p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/cb172a72369b42049481cbce2acc57dd.png" alt="梯度下降的例子 Gradient Descent on m Examples"></p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/a510f9ab08d89fd0695eb6105052ac57.png" alt="逻辑回归中的梯度下降法"></p>
+<p>前面提到的是对单个样本求偏导和应用梯度下降算法的过程。对于有 <img src="https://www.zhihu.com/equation?tex=m" alt="公式"> 个样本的数据集，Cost Function <img src="https://www.zhihu.com/equation?tex=J(w,b)" alt="公式"> 、 <img src="https://www.zhihu.com/equation?tex=a%5E%7B(i)%7D" alt="公式"> 和 权重参数 <img src="https://www.zhihu.com/equation?tex=w_1" alt="公式"> 的计算如图所示。</p>
+<p>完整的Logistic回归中某次训练的流程如下，这里仅假设特征向量的维度为2：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">J=0; dw1=0; dw2=0; db=0;</span><br><span class="line">for i = 1 to m   z(i) = wx(i)+b;   a(i) = sigmoid(z(i));  </span><br><span class="line">J+= -[y(i)log(a(i))+(1-y(i))log(1-a(i));  </span><br><span class="line">dz(i) = a(i)-y(i);   dw1 += x1(i)dz(i);   dw2 += x2(i)dz(i);  </span><br><span class="line">db += dz(i); J /= m; dw1 /= m; dw2 /= m; db /= m;</span><br></pre></td></tr></table></figure>
+
+<p>接着再对 <img src="https://www.zhihu.com/equation?tex=w_1" alt="公式"> 、 <img src="https://www.zhihu.com/equation?tex=w_2" alt="公式"> 、 <img src="https://www.zhihu.com/equation?tex=b" alt="公式"> 进行迭代。</p>
+<p>上述计算过程有一个缺点：整个流程包含两个for循环。其中：</p>
+<ul>
+<li>第一个for循环遍历 <img src="https://www.zhihu.com/equation?tex=m" alt="公式"> 个样本</li>
+<li>第二个for循环遍历所有特征</li>
+</ul>
+<p>如果有大量特征，在代码中显示使用for循环会使算法很低效。<strong>向量化</strong>可以用于解决显式使用for循环的问题。</p>
+<h2 id="5-向量化-Vectorization"><a href="#5-向量化-Vectorization" class="headerlink" title="5.向量化(Vectorization)"></a>5.向量化(Vectorization)</h2><p>继续以逻辑回归为例，如果以非向量化的循环方式计算 <img src="https://www.zhihu.com/equation?tex=z=w%5ETx+b" alt="公式">，代码如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">z = 0;for i in range(n_x):    z += w[i] * x[i]z += b</span><br></pre></td></tr></table></figure>
+
+<p>基于向量化的操作，可以并行计算，极大提升效率，同时代码也更为简洁：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">z = np.dot(w, x) + b</span><br></pre></td></tr></table></figure>
+
+<p>不用显式for循环，实现逻辑回归的梯度下降的迭代伪代码如下：</p>
+<p><img src="https://www.zhihu.com/equation?tex=Z=w%5ETX+b=np.dot(w.T,%20x)%20+%20b" alt="公式"></p>
+<p><img src="https://www.zhihu.com/equation?tex=A=%5Csigma(Z)" alt="公式"></p>
+<p><img src="https://www.zhihu.com/equation?tex=dZ=A-Y" alt="公式"></p>
+<p><img src="https://www.zhihu.com/equation?tex=dw=%5Cfrac%7B1%7D%7Bm%7DXdZ%5ET" alt="公式"></p>
+<p><img src="https://www.zhihu.com/equation?tex=db=%5Cfrac%7B1%7D%7Bm%7Dnp.sum(dZ)" alt="公式"></p>
+<p><img src="https://www.zhihu.com/equation?tex=w:=w-%5Csigma%20dw" alt="公式"></p>
+<p><img src="https://www.zhihu.com/equation?tex=b:=b-%5Csigma%20db" alt="公式"></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="http://example.com">Olstussy</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2023/08/03/2.%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/">http://example.com/2023/08/03/2.%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">Olstussy</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/AI/">AI</a><a class="post-meta__tags" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a><a class="post-meta__tags" href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习</a></div><div class="post_share"><div class="social-share" data-image="https://s2.loli.net/2023/08/02/UOWRIZPuaAX81yL.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/08/03/1.%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86,%E5%90%8D%E8%AF%8D%E8%A7%A3%E9%87%8A/" title="AI笔记（1）：基础知识"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">AI笔记（1）：基础知识</div></div></a></div><div class="next-post pull-right"><a href="/2023/08/03/3.%E6%B5%85%E5%B1%82%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" title="AI笔记（3）：浅层神经网络"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">AI笔记（3）：浅层神经网络</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2023/08/03/5.%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%BA%94%E7%94%A8/" title="AI笔记（5）：神经网络应用"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-08-03</div><div class="title">AI笔记（5）：神经网络应用</div></div></a></div><div><a href="/2023/08/03/3.%E6%B5%85%E5%B1%82%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" title="AI笔记（3）：浅层神经网络"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-08-03</div><div class="title">AI笔记（3）：浅层神经网络</div></div></a></div><div><a href="/2023/08/03/4.%E6%B7%B1%E5%B1%82%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" title="AI笔记（4）：深层神经网络"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-08-03</div><div class="title">AI笔记（4）：深层神经网络</div></div></a></div><div><a href="/2023/08/03/1.%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86,%E5%90%8D%E8%AF%8D%E8%A7%A3%E9%87%8A/" title="AI笔记（1）：基础知识"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-08-03</div><div class="title">AI笔记（1）：基础知识</div></div></a></div><div><a href="/2023/08/02/numpy%E7%AC%94%E8%AE%B0/" title="Numpy笔记"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-08-02</div><div class="title">Numpy笔记</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://s2.loli.net/2023/08/02/UOWRIZPuaAX81yL.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Olstussy</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">10</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/olstussy"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">No Error No Warning !</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E4%B8%8E%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92"><span class="toc-number">1.</span> <span class="toc-text">1.算法基础与逻辑回归</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E4%BA%8C%E5%88%86%E7%B1%BB%E9%97%AE%E9%A2%98%E4%B8%8E%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 二分类问题与机器学习基础</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%E7%AE%97%E6%B3%95"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 逻辑回归算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%E7%9A%84%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0"><span class="toc-number">1.3.</span> <span class="toc-text">1.3 逻辑回归的损失函数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95-Gradient-Descent"><span class="toc-number">2.</span> <span class="toc-text">2.梯度下降法(Gradient Descent)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E8%AE%A1%E7%AE%97%E5%9B%BE-Computation-Graph"><span class="toc-number">3.</span> <span class="toc-text">3.计算图(Computation Graph)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E5%89%8D%E5%90%91%E4%BC%A0%E6%92%AD-Forward-Propagation"><span class="toc-number">3.1.</span> <span class="toc-text">3.1 前向传播(Forward Propagation)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD-Back-Propagation"><span class="toc-number">3.2.</span> <span class="toc-text">3.2 反向传播(Back Propagation)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%E4%B8%AD%E7%9A%84%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95"><span class="toc-number">4.</span> <span class="toc-text">4.逻辑回归中的梯度下降法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD%E8%AE%A1%E7%AE%97%E6%A2%AF%E5%BA%A6"><span class="toc-number">4.0.1.</span> <span class="toc-text">反向传播计算梯度</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E5%90%91%E9%87%8F%E5%8C%96-Vectorization"><span class="toc-number">5.</span> <span class="toc-text">5.向量化(Vectorization)</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/08/03/5.%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%BA%94%E7%94%A8/" title="AI笔记（5）：神经网络应用">AI笔记（5）：神经网络应用</a><time datetime="2023-08-03T04:41:07.000Z" title="发表于 2023-08-03 12:41:07">2023-08-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/08/03/1.%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86,%E5%90%8D%E8%AF%8D%E8%A7%A3%E9%87%8A/" title="AI笔记（1）：基础知识">AI笔记（1）：基础知识</a><time datetime="2023-08-03T04:41:07.000Z" title="发表于 2023-08-03 12:41:07">2023-08-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/08/03/2.%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/" title="AI笔记（2）：神经网络基础">AI笔记（2）：神经网络基础</a><time datetime="2023-08-03T04:41:07.000Z" title="发表于 2023-08-03 12:41:07">2023-08-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/08/03/3.%E6%B5%85%E5%B1%82%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" title="AI笔记（3）：浅层神经网络">AI笔记（3）：浅层神经网络</a><time datetime="2023-08-03T04:41:07.000Z" title="发表于 2023-08-03 12:41:07">2023-08-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/08/03/4.%E6%B7%B1%E5%B1%82%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" title="AI笔记（4）：深层神经网络">AI笔记（4）：深层神经网络</a><time datetime="2023-08-03T04:41:07.000Z" title="发表于 2023-08-03 12:41:07">2023-08-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2022 - 2023 By Olstussy</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
