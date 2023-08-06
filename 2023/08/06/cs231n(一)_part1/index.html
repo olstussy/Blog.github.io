@@ -1,0 +1,256 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>cs231n(一)_part1 | Olstussy</title><meta name="author" content="Olstussy"><meta name="copyright" content="Olstussy"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="​                                                  斯坦福cs231n第一节课前半部分的ppt">
+<meta property="og:type" content="article">
+<meta property="og:title" content="cs231n(一)_part1">
+<meta property="og:url" content="https://olstussy.top/2023/08/06/cs231n(%E4%B8%80)_part1/index.html">
+<meta property="og:site_name" content="Olstussy">
+<meta property="og:description" content="​                                                  斯坦福cs231n第一节课前半部分的ppt">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2023/08/02/UOWRIZPuaAX81yL.jpg">
+<meta property="article:published_time" content="2023-08-06T04:40:21.000Z">
+<meta property="article:modified_time" content="2023-08-06T15:59:38.441Z">
+<meta property="article:author" content="Olstussy">
+<meta property="article:tag" content="机器学习">
+<meta property="article:tag" content="深度学习">
+<meta property="article:tag" content="CV">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2023/08/02/UOWRIZPuaAX81yL.jpg"><link rel="shortcut icon" href="/img/favicon-32x32-next.png"><link rel="canonical" href="https://olstussy.top/2023/08/06/cs231n(%E4%B8%80)_part1/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'cs231n(一)_part1',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2023-08-06 23:59:38'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s2.loli.net/2023/08/02/UOWRIZPuaAX81yL.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">12</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://s2.loli.net/2023/08/02/n2kWORi8zyCmNXH.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Olstussy"><span class="site-name">Olstussy</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">cs231n(一)_part1</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-08-06T04:40:21.000Z" title="发表于 2023-08-06 12:40:21">2023-08-06</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-08-06T15:59:38.441Z" title="更新于 2023-08-06 23:59:38">2023-08-06</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/AI/">AI</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="cs231n(一)_part1"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>​                                                  斯坦福cs231n第一节课前半部分的ppt</p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_2-16913368838901.jpeg" alt="lecture_1_part_1_2"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_3-16913368838912.jpeg" alt="lecture_1_part_1_3"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_4-16913368838913.jpeg" alt="lecture_1_part_1_4"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_5-16913368838914.jpeg" alt="lecture_1_part_1_5"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_6-16913368838915.jpeg" alt="lecture_1_part_1_6"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_7-16913368838916.jpeg" alt="lecture_1_part_1_7"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_08-16913368838917.jpeg" alt="lecture_1_part_1_08"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_8-16913368838918.jpeg" alt="lecture_1_part_1_8"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_09-16913368838919.jpeg" alt="lecture_1_part_1_09"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_9-169133688389110.jpeg" alt="lecture_1_part_1_9"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_10%20(1)-169133688389111.jpeg" alt="lecture_1_part_1_10 (1)"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_10-169133688389112.jpeg" alt="lecture_1_part_1_10"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_11%20(1)-169133688389113.jpeg" alt="lecture_1_part_1_11 (1)"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_11-169133688389114.jpeg" alt="lecture_1_part_1_11"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_12-169133688389115.jpeg" alt="lecture_1_part_1_12"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_13-169133688389117.jpeg" alt="lecture_1_part_1_13"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_14%20(1)-169133688389116.jpeg" alt="lecture_1_part_1_14 (1)"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_14-169133688389118.jpeg" alt="lecture_1_part_1_14"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_15%20(1)-169133688389119.jpeg" alt="lecture_1_part_1_15 (1)"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_15-169133688389120.jpeg" alt="lecture_1_part_1_15"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_16%20(1)-169133688389121.jpeg" alt="lecture_1_part_1_16 (1)"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_16-169133688389122.jpeg" alt="lecture_1_part_1_16"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_17%20(1)-169133688389123.jpeg" alt="lecture_1_part_1_17 (1)"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_17-169133688389224.jpeg" alt="lecture_1_part_1_17"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_18%20(1)-169133688389225.jpeg" alt="lecture_1_part_1_18 (1)"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_18-169133688389226.jpeg" alt="lecture_1_part_1_18"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_19%20(1)-169133688389227.jpeg" alt="lecture_1_part_1_19 (1)"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_19-169133688389228.jpeg" alt="lecture_1_part_1_19"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_20%20(1)-169133688389230.jpeg" alt="lecture_1_part_1_20 (1)"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_20-169133688389229.jpeg" alt="lecture_1_part_1_20"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_21%20(1)-169133688389231.jpeg" alt="lecture_1_part_1_21 (1)"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_21-169133688389233.jpeg" alt="lecture_1_part_1_21"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_22%20(1)-169133688389232.jpeg" alt="lecture_1_part_1_22 (1)"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_22-169133688389234.jpeg" alt="lecture_1_part_1_22"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_23%20(1)-169133688389235.jpeg" alt="lecture_1_part_1_23 (1)"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_23-169133688389236.jpeg" alt="lecture_1_part_1_23"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_24%20(1)-169133688389237.jpeg" alt="lecture_1_part_1_24 (1)"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_24-169133688389238.jpeg" alt="lecture_1_part_1_24"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_25%20(1)-169133688389239.jpeg" alt="lecture_1_part_1_25 (1)"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_25-169133688389240.jpeg" alt="lecture_1_part_1_25"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_26-169133688389241.jpeg" alt="lecture_1_part_1_26"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_27-169133688389242.jpeg" alt="lecture_1_part_1_27"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_28%20(1)-169133688389243.jpeg" alt="lecture_1_part_1_28 (1)"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_28-169133688389244.jpeg" alt="lecture_1_part_1_28"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_29%20(1)-169133688389245.jpeg" alt="lecture_1_part_1_29 (1)"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_29-169133688389246.jpeg" alt="lecture_1_part_1_29"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_30%20(1)-169133688389347.jpeg" alt="lecture_1_part_1_30 (1)"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_30-169133688389348.jpeg" alt="lecture_1_part_1_30"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_31%20(1)-169133688389349.jpeg" alt="lecture_1_part_1_31 (1)"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_31-169133688389350.jpeg" alt="lecture_1_part_1_31"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_32-169133688389351.jpeg" alt="lecture_1_part_1_32"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_33-169133688389352.jpeg" alt="lecture_1_part_1_33"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_34-169133688389353.jpeg" alt="lecture_1_part_1_34"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_35-169133688389354.jpeg" alt="lecture_1_part_1_35"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_36-169133688389355.jpeg" alt="lecture_1_part_1_36"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_37-169133688389356.jpeg" alt="lecture_1_part_1_37"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_38-169133688389357.jpeg" alt="lecture_1_part_1_38"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_39-169133688389358.jpeg" alt="lecture_1_part_1_39"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_40-169133688389359.jpeg" alt="lecture_1_part_1_40"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_41-169133688389360.jpeg" alt="lecture_1_part_1_41"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_42-169133688389361.jpeg" alt="lecture_1_part_1_42"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_43-169133688389362.jpeg" alt="lecture_1_part_1_43"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_44-169133688389363.jpeg" alt="lecture_1_part_1_44"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_45-169133688389364.jpeg" alt="lecture_1_part_1_45"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_46-169133688389365.jpeg" alt="lecture_1_part_1_46"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_47-169133688389366.jpeg" alt="lecture_1_part_1_47"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_48-169133688389367.jpeg" alt="lecture_1_part_1_48"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_49-169133688389368.jpeg" alt="lecture_1_part_1_49"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_50-169133688389369.jpeg" alt="lecture_1_part_1_50"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_51-169133688389371.jpeg" alt="lecture_1_part_1_51"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_52-169133688389370.jpeg" alt="lecture_1_part_1_52"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_53-169133688389372.jpeg" alt="lecture_1_part_1_53"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_54-169133688389373.jpeg" alt="lecture_1_part_1_54"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_55-169133688389374.jpeg" alt="lecture_1_part_1_55"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_56-169133688389375.jpeg" alt="lecture_1_part_1_56"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_57-169133688389376.jpeg" alt="lecture_1_part_1_57"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_58-169133688389377.jpeg" alt="lecture_1_part_1_58"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_59-169133688389378.jpeg" alt="lecture_1_part_1_59"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_60-169133688389479.jpeg" alt="lecture_1_part_1_60"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_61-169133688389480.jpeg" alt="lecture_1_part_1_61"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_62-169133688389481.jpeg" alt="lecture_1_part_1_62"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_63-169133688389482.jpeg" alt="lecture_1_part_1_63"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_64-169133688389483.jpeg" alt="lecture_1_part_1_64"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_65-169133688389484.jpeg" alt="lecture_1_part_1_65"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_66-169133688389485.jpeg" alt="lecture_1_part_1_66"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_67-169133688389486.jpeg" alt="lecture_1_part_1_67"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_68-169133688389487.jpeg" alt="lecture_1_part_1_68"></p>
+<p><img src="/2023/08/06/cs231n(%E4%B8%80)_part1/lecture_1_part_1_1-169133688389488.jpeg" alt="lecture_1_part_1_1"></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://olstussy.top">Olstussy</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://olstussy.top/2023/08/06/cs231n(%E4%B8%80)_part1/">https://olstussy.top/2023/08/06/cs231n(一)_part1/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://olstussy.top" target="_blank">Olstussy</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a><a class="post-meta__tags" href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习</a><a class="post-meta__tags" href="/tags/CV/">CV</a></div><div class="post_share"><div class="social-share" data-image="https://s2.loli.net/2023/08/02/UOWRIZPuaAX81yL.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/08/06/cs231n(%E4%B8%80)_part2/" title="cs231n(一)_part2"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">cs231n(一)_part2</div></div></a></div><div class="next-post pull-right"><a href="/2023/08/03/5.%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%BA%94%E7%94%A8/" title="AI笔记（5）：神经网络应用"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">AI笔记（5）：神经网络应用</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2023/08/06/cs231n(%E4%B8%80)_part2/" title="cs231n(一)_part2"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-08-06</div><div class="title">cs231n(一)_part2</div></div></a></div><div><a href="/2023/08/02/2.%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/" title="AI笔记（2）：神经网络基础"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-08-02</div><div class="title">AI笔记（2）：神经网络基础</div></div></a></div><div><a href="/2023/08/03/4.%E6%B7%B1%E5%B1%82%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" title="AI笔记（4）：深层神经网络"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-08-03</div><div class="title">AI笔记（4）：深层神经网络</div></div></a></div><div><a href="/2023/08/03/5.%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%BA%94%E7%94%A8/" title="AI笔记（5）：神经网络应用"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-08-03</div><div class="title">AI笔记（5）：神经网络应用</div></div></a></div><div><a href="/2023/08/03/3.%E6%B5%85%E5%B1%82%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" title="AI笔记（3）：浅层神经网络"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-08-03</div><div class="title">AI笔记（3）：浅层神经网络</div></div></a></div><div><a href="/2023/08/02/numpy%E7%AC%94%E8%AE%B0/" title="Numpy笔记"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-08-02</div><div class="title">Numpy笔记</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://s2.loli.net/2023/08/02/UOWRIZPuaAX81yL.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Olstussy</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">12</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/olstussy"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">No Error No Warning !</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/08/06/cs231n(%E4%B8%80)_part2/" title="cs231n(一)_part2">cs231n(一)_part2</a><time datetime="2023-08-06T05:40:21.000Z" title="发表于 2023-08-06 13:40:21">2023-08-06</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/08/06/cs231n(%E4%B8%80)_part1/" title="cs231n(一)_part1">cs231n(一)_part1</a><time datetime="2023-08-06T04:40:21.000Z" title="发表于 2023-08-06 12:40:21">2023-08-06</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/08/03/5.%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%BA%94%E7%94%A8/" title="AI笔记（5）：神经网络应用">AI笔记（5）：神经网络应用</a><time datetime="2023-08-03T10:41:07.000Z" title="发表于 2023-08-03 18:41:07">2023-08-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/08/03/4.%E6%B7%B1%E5%B1%82%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" title="AI笔记（4）：深层神经网络">AI笔记（4）：深层神经网络</a><time datetime="2023-08-03T07:41:07.000Z" title="发表于 2023-08-03 15:41:07">2023-08-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/08/03/3.%E6%B5%85%E5%B1%82%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" title="AI笔记（3）：浅层神经网络">AI笔记（3）：浅层神经网络</a><time datetime="2023-08-03T05:41:07.000Z" title="发表于 2023-08-03 13:41:07">2023-08-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2022 - 2023 By Olstussy</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
