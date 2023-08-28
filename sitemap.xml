@@ -2,6 +2,24 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://olstussy.top/2023/08/20/cs231n(%E4%B8%89)/</loc>
+    
+    <lastmod>2023-08-28</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://olstussy.top/2023/08/20/cs231n(%E4%BA%8C)/</loc>
+    
+    <lastmod>2023-08-28</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://olstussy.top/baidu_verify_codeva-FoX046Csnw.html</loc>
     
     <lastmod>2023-08-18</lastmod>
@@ -184,7 +202,7 @@
 
   <url>
     <loc>https://olstussy.top/</loc>
-    <lastmod>2023-08-18</lastmod>
+    <lastmod>2023-08-28</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -192,56 +210,56 @@
   
   <url>
     <loc>https://olstussy.top/tags/AI/</loc>
-    <lastmod>2023-08-18</lastmod>
+    <lastmod>2023-08-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://olstussy.top/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/</loc>
-    <lastmod>2023-08-18</lastmod>
+    <lastmod>2023-08-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://olstussy.top/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/</loc>
-    <lastmod>2023-08-18</lastmod>
+    <lastmod>2023-08-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://olstussy.top/tags/Linux/</loc>
-    <lastmod>2023-08-18</lastmod>
+    <lastmod>2023-08-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://olstussy.top/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/</loc>
-    <lastmod>2023-08-18</lastmod>
+    <lastmod>2023-08-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://olstussy.top/tags/CV/</loc>
-    <lastmod>2023-08-18</lastmod>
+    <lastmod>2023-08-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://olstussy.top/tags/Python/</loc>
-    <lastmod>2023-08-18</lastmod>
+    <lastmod>2023-08-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://olstussy.top/tags/Numpy/</loc>
-    <lastmod>2023-08-18</lastmod>
+    <lastmod>2023-08-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
@@ -250,21 +268,21 @@
   
   <url>
     <loc>https://olstussy.top/categories/AI/</loc>
-    <lastmod>2023-08-18</lastmod>
+    <lastmod>2023-08-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://olstussy.top/categories/Linux/</loc>
-    <lastmod>2023-08-18</lastmod>
+    <lastmod>2023-08-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://olstussy.top/categories/Python/</loc>
-    <lastmod>2023-08-18</lastmod>
+    <lastmod>2023-08-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
