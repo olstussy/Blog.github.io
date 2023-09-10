@@ -1,0 +1,267 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>AI经典论文综述 | Olstussy</title><meta name="author" content="Olstussy"><meta name="copyright" content="Olstussy"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="1.Distilling the Knowledge in a Neural Network 主要工作（What）  “蒸馏”（distillation）：把大网络的知识压缩成小网络的一种方法 “专用模型”（specialist models）：对于一个大网络，可以训练多个专用网络来提升大网络的模型表现  具体做法（How）  蒸馏：先训练好一个大网络，在最后的softmax层使用合适的温度参数T">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AI经典论文综述">
+<meta property="og:url" content="https://olstussy.top/2023/09/10/%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/index.html">
+<meta property="og:site_name" content="Olstussy">
+<meta property="og:description" content="1.Distilling the Knowledge in a Neural Network 主要工作（What）  “蒸馏”（distillation）：把大网络的知识压缩成小网络的一种方法 “专用模型”（specialist models）：对于一个大网络，可以训练多个专用网络来提升大网络的模型表现  具体做法（How）  蒸馏：先训练好一个大网络，在最后的softmax层使用合适的温度参数T">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2023/08/02/UOWRIZPuaAX81yL.jpg">
+<meta property="article:published_time" content="2023-09-10T04:40:21.000Z">
+<meta property="article:modified_time" content="2023-09-10T02:40:00.240Z">
+<meta property="article:author" content="Olstussy">
+<meta property="article:tag" content="机器学习">
+<meta property="article:tag" content="深度学习">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="Numpy">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2023/08/02/UOWRIZPuaAX81yL.jpg"><link rel="shortcut icon" href="/img/favicon-32x32-next.png"><link rel="canonical" href="https://olstussy.top/2023/09/10/%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'AI经典论文综述',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-09-10 10:40:00'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s2.loli.net/2023/08/02/UOWRIZPuaAX81yL.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">16</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">9</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://s2.loli.net/2023/08/02/n2kWORi8zyCmNXH.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Olstussy"><span class="site-name">Olstussy</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">AI经典论文综述</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-09-10T04:40:21.000Z" title="发表于 2023-09-10 12:40:21">2023-09-10</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-09-10T02:40:00.240Z" title="更新于 2023-09-10 10:40:00">2023-09-10</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/AI/">AI</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="AI经典论文综述"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p><strong>1.Distilling the Knowledge in a Neural Network</strong></p>
+<p><strong>主要工作（What）</strong></p>
+<ol>
+<li>“蒸馏”（<strong>distillation</strong>）：把大网络的知识压缩成小网络的一种方法</li>
+<li>“专用模型”（<strong>specialist models</strong>）：对于一个大网络，可以训练多个专用网络来提升大网络的模型表现</li>
+</ol>
+<p><strong>具体做法（How）</strong></p>
+<ol>
+<li><strong>蒸馏</strong>：先训练好一个大网络，在最后的softmax层使用合适的温度参数T，最后训练得到的概率称为“软目标”。以这个软目标和真实标签作为目标，去训练一个比较小的网络，训练的时候也使用在大模型中确定的温度参数T</li>
+<li><strong>专用模型</strong>：对于一个已经训练好的大网络，可以训练一系列的专用模型，每个专用模型只训练一部分专用的类以及一个“不属于这些专用类的其它类”，比如专用模型1训练的类包括“显示器”，“鼠标”，“键盘”，…，“其它”；专用模型2训练的类包括“玻璃杯”，“保温杯”，“塑料杯”，“其它“。最后以专用模型和大网络的预测输出作为目标，训练一个最终的网络来拟合这个目标。</li>
+</ol>
+<p><strong>意义（Why）</strong></p>
+<ol>
+<li><p>蒸馏<strong>把大网络压成小网络</strong>，这样就可以先在训练阶段花费大精力训练一个大网络，然后<strong>在部署阶段以较小的计算代价来产生一个较小的网络</strong>，同时保持一定的网络预测表现。</p>
+</li>
+<li><p>对于一个已经训练好的大网络，如果要去做集成的话计算开销是很大的，可以在这个基础上<strong>训练一系列专用模型</strong>，因为这些模型通常比较小，所以训练会快很多，而且有了这些专用模型的输出可以得到一个软目标，实验证明使用软目标训练可以减小过拟合。最后根据这个大网络和一系列专用模型的输出作为目标，训练一个最终的网络，可以得到不错的表现，而且<strong>不需要对大网络做大量的集成计算</strong>。</p>
+<p><img src="/2023/09/10/%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/Users\12805\AppData\Roaming\Typora\typora-user-images\image-20230626111312045.png" alt="image-20230626111312045"></p>
+</li>
+</ol>
+<p><strong>2.Deep Neural Networks are Easily Fooled:High Confidence Predictions for Unrecognizable Images</strong></p>
+<p>首次提出<strong>假反例攻击</strong>，即：生成人类无法识别的图片，却能够让神经网络以高置信度分类成某个类别</p>
+<p>使用了多种不同的方法生成图片，称为“fooling images”</p>
+<ol>
+<li>普通的EA算法(进化算法)，对图片的某个像素进行变异、进化</li>
+<li><strong>CPPN EA算法</strong>，可以为图像提供一些几何特性，如对称等</li>
+<li>梯度上升：计算DNN的softmax的输出对于输入的梯度，我们根据梯度来增加一个单元的激活值，目的是去找到一个图片能够得到很高的分类置信度。</li>
+</ol>
+<p>介绍了在MNIST数据集和ImageNet数据集上进行实验的区别</p>
+<p>在MNIST数据集上，由于数据量小，得到的网络模型的容量小，更容易生成fooling images，也更难通过利用fooling images重新训练模型的方式 来提高其防御能力</p>
+<p>在ImageNet数据集上，数据量大，类别多，得到的网络模型的容量大，更难生成fooling images，不过由于其容量大，能够通过重新训练的方式提高防御能力</p>
+<p>灰度 : MNIST </p>
+<p>深度神经网络: DNN </p>
+<p>CPPN：合成模式生成网络：compositional pattern-producing network</p>
+<p><strong>3.How transferable are features in deep neural networks?</strong></p>
+<p>小结论：<strong>前面几层都学习到的是通用的特征（general feature），随着网络的加深，后面的网络更偏重于学习特定的特征</strong></p>
+<p><strong>问题</strong>：我们怎么知道哪些层是general&#x2F;specific？更进一步：如果应用于迁移学习，如何决定该迁移哪些层固定哪些层？</p>
+<p><strong>答</strong>：围绕着神经网络的可迁移性，作者设计了两大方面的实验：</p>
+<ul>
+<li>迁移A网络的某n层到B（AnB） vs 固定B网络的某n层（BnB）</li>
+<li>权重初始化与迁移表现</li>
+</ul>
+<p>​       AnB：（所有实验都是针对数据B来说的）将A网络的前n层拿来并将它frozen，剩下的8-n层随机初始化，然后对B进行分类。</p>
+<p>​       BnB：把训练好的B网络的前n层拿来并将它frozen，剩下的8-n层随机初始化，然后对B进行分类。</p>
+<p>​      <strong>随着可迁移层数的增加，模型性能下降。但是，前3层仍然还是可以迁移的，同时，与随机初始化所有权重比较，迁移学习的精度是很高的</strong></p>
+<p><strong>结论：</strong></p>
+<ul>
+<li>神经网络的前3层基本都是general feature，进行迁移的效果会比较好；</li>
+<li>深度迁移网络中加入fine-tune（微调），效果会提升比较大，可能会比原网络效果还好；</li>
+<li>Fine-tune可以比较好地克服数据之间的差异性；</li>
+<li>深度迁移网络要比随机初始化权重效果好；</li>
+<li>网络层数的迁移可以加速网络的学习和优化。</li>
+</ul>
+<p>4.CNN Features off-the-shelf: an Astounding Baseline for Recognition</p>
+<p>结论：CNN通过深度学习获得的特征应该是大多数视觉识别任务的主要选择</p>
+<p>5.Oquab_Learning_and_Transferring_2014_CVPR_paper</p>
+<p>结论：论文揭露了在大规模数据集（ImageNet dataset）上训练的神经网络，可以高效地迁移到其他小数据集（PASCAL VOC 2007&#x2F;2012 dataset）上。论文通过对PASCAL VOC图片进行sliding处理，解决了两个数据集之间存在的”dataset label bias”问题。论文提供了一种简单有效的迁移方法，并对迁移结果进行了实验考察。结果表明，使用迁移的特征比重新训练往往能获得更好的表现</p>
+<p>6.Visualizing and Understanding Convolutional Networks</p>
+<p><strong>简单介绍（What）</strong></p>
+<ol>
+<li>提出了一种可视化的技巧，能够看到CNN中间层的特征功能和分类操作。</li>
+<li>通过对这些可视化信息进行分析，我们可以<ul>
+<li>直观了解和分析CNN学到的特征（中间层特征对应什么样的图像）</li>
+<li>可以找到提升模型的办法（观察中间层特征，分析模型可以改进的地方）</li>
+<li>分析CNN的遮掩敏感性（遮住某一块区域后对分类结果的影响）</li>
+</ul>
+</li>
+<li>这种可视化技巧主要用到反卷积的技术，把中间层的激活特征映射回输入空间。</li>
+</ol>
+<p><strong>论文动机（Why）</strong></p>
+<ol>
+<li>虽然CNN在图像任务上取得了优秀的表现，但是看不到CNN的内部操作和复杂模型的表现行为，不清楚它们为何会取得这么好的效果。</li>
+<li>在科学的角度上，这是不能接收的，没有清晰地理解CNN是如何工作以及为什么这样运作，那么它的发展和进步就只能靠不断地“试错”。</li>
+<li>所以论文提出了可视化的技巧，可以观察到训练过程中特征的演化和影响，可以分析模型潜在的问题。</li>
+</ol>
+<p><strong>怎么做的（How）</strong></p>
+<ol>
+<li>论文的网络结构和alexNet很类似，做了一些改动，比如stride变成2，11x11的卷积核变成7x7的卷积核。</li>
+<li>为了把中间层的激活块映射回输入空间，使用了反卷积的技术，如下图所示，右边是卷积网，左边是反卷积网。</li>
+<li>反池化：由于池化操作不可逆，使用了一个近似可逆的方法，用Switches记录每个池化块最大值的位置，如下图所示，这样就可以利用Switches和池化后的特征图，反池化成Unpooled Maps</li>
+<li>relu：反池化后，为了获得有效的特征重建，也使用relu，得到Rectified Unpooled Maps</li>
+<li>反卷积：用原来卷积核的转置版本，进行卷积操作，得到重建的Reconstruction</li>
+</ol>
+<p><strong>总结</strong></p>
+<ol>
+<li>提出了一种可视化CNN的方法，说明了内部特征并不是随机的，是可以解释的。</li>
+<li>通过可视化CNN了解到了一些直觉上的特性，比如随着增加层数，类别的可区分度越高，特征越有用。</li>
+<li>通过可视化CNN可以对模型进行分析和改善。</li>
+<li>通过可视化CNN的遮蔽实验，发现模型对局部结构是敏感的，并不是只用到了广阔的场景信息。</li>
+<li>展示了ImageNet的预训练模型可以很好地泛化到其它数据集。</li>
+</ol>
+<p>7.Training Very Deep Networks - Highway Networks</p>
+<h3 id="目标：怎么训练很深的神经网络"><a href="#目标：怎么训练很深的神经网络" class="headerlink" title="目标：怎么训练很深的神经网络"></a><strong>目标：</strong>怎么训练很深的神经网络</h3><p>然而过深的神经网络会造成各种问题，梯度消失之类的，导致很难训练,作者利用了类似LSTM的方法，通过增加gate来控制transform前和transform后的数据的比例，称为 Highway network</p>
+<h2 id="论文贡献："><a href="#论文贡献：" class="headerlink" title="论文贡献："></a>论文贡献：</h2><p>文章提出了Hightway network，基于门机制引入了transform gate <strong>T</strong>（x.WT）和carry gate <strong>C</strong>（x,WT）,使得训练更深的网络变为可能，并且加快了网络的收敛速度。</p>
+<h2 id="论文思想基础："><a href="#论文思想基础：" class="headerlink" title="论文思想基础："></a>论文思想基础：</h2><p>1.在前馈网络结构中传统非线性变换的叠加会导致激活和梯度的传播不良。</p>
+<p>2.采用两个门<strong>transform gate</strong> 和 <strong>carry gate</strong> 来控制当前层的输出形式，输出形式来自两部分：当前层的直接输入和经过非线性映射后的部分。</p>
+<p>8.Delving Deep into Rectifiers:Surpassing Human-Level Performance on ImageNet  Classification</p>
+<p>核心内容就两个方面，首先提出PReLU激活函数，接着提出一种鲁棒性的权重初始化的方法。同时也宣告深度学习特定图像集合的识别率超越人类水平。</p>
+<p><img src="https://pic1.zhimg.com/80/v2-0df323bb05a7c553b7c2df2f899554f0_1440w.webp" alt="img"></p>
+<p>​                                                                     ReLU vs PReLU</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://olstussy.top">Olstussy</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://olstussy.top/2023/09/10/%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/">https://olstussy.top/2023/09/10/论文总结/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://olstussy.top" target="_blank">Olstussy</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a><a class="post-meta__tags" href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习</a><a class="post-meta__tags" href="/tags/Python/">Python</a><a class="post-meta__tags" href="/tags/Numpy/">Numpy</a></div><div class="post_share"><div class="social-share" data-image="https://s2.loli.net/2023/08/02/UOWRIZPuaAX81yL.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2023/09/10/%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(1-7%E7%AB%A0)/" title="统计学习笔记(1-7章)"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">统计学习笔记(1-7章)</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2023/08/02/numpy%E7%AC%94%E8%AE%B0/" title="Numpy笔记"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-08-02</div><div class="title">Numpy笔记</div></div></a></div><div><a href="/2023/09/10/%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(1-7%E7%AB%A0)/" title="统计学习笔记(1-7章)"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-09-10</div><div class="title">统计学习笔记(1-7章)</div></div></a></div><div><a href="/2023/08/03/3.%E6%B5%85%E5%B1%82%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" title="AI笔记（3）：浅层神经网络"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-08-03</div><div class="title">AI笔记（3）：浅层神经网络</div></div></a></div><div><a href="/2023/08/02/2.%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/" title="AI笔记（2）：神经网络基础"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-08-02</div><div class="title">AI笔记（2）：神经网络基础</div></div></a></div><div><a href="/2023/08/03/4.%E6%B7%B1%E5%B1%82%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" title="AI笔记（4）：深层神经网络"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-08-03</div><div class="title">AI笔记（4）：深层神经网络</div></div></a></div><div><a href="/2023/08/03/5.%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%BA%94%E7%94%A8/" title="AI笔记（5）：神经网络应用"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-08-03</div><div class="title">AI笔记（5）：神经网络应用</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://s2.loli.net/2023/08/02/UOWRIZPuaAX81yL.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Olstussy</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">16</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">9</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/olstussy"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">No Error No Warning !</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%AE%E6%A0%87%EF%BC%9A%E6%80%8E%E4%B9%88%E8%AE%AD%E7%BB%83%E5%BE%88%E6%B7%B1%E7%9A%84%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C"><span class="toc-number">1.</span> <span class="toc-text">目标：怎么训练很深的神经网络</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%BA%E6%96%87%E8%B4%A1%E7%8C%AE%EF%BC%9A"><span class="toc-number"></span> <span class="toc-text">论文贡献：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%BA%E6%96%87%E6%80%9D%E6%83%B3%E5%9F%BA%E7%A1%80%EF%BC%9A"><span class="toc-number"></span> <span class="toc-text">论文思想基础：</span></a></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/09/10/%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" title="AI经典论文综述">AI经典论文综述</a><time datetime="2023-09-10T04:40:21.000Z" title="发表于 2023-09-10 12:40:21">2023-09-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/09/10/%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(1-7%E7%AB%A0)/" title="统计学习笔记(1-7章)">统计学习笔记(1-7章)</a><time datetime="2023-09-10T02:36:21.000Z" title="发表于 2023-09-10 10:36:21">2023-09-10</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/08/20/cs231n(%E4%B8%89)/" title="cs231n(三)">cs231n(三)</a><time datetime="2023-08-20T02:10:21.000Z" title="发表于 2023-08-20 10:10:21">2023-08-20</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/08/20/cs231n(%E4%BA%8C)/" title="cs231n(二)">cs231n(二)</a><time datetime="2023-08-20T02:07:21.000Z" title="发表于 2023-08-20 10:07:21">2023-08-20</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/08/06/cs231n(%E4%B8%80)_part2/" title="cs231n(一)_part2">cs231n(一)_part2</a><time datetime="2023-08-06T05:40:21.000Z" title="发表于 2023-08-06 13:40:21">2023-08-06</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2022 - 2023 By Olstussy</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
