@@ -2,6 +2,24 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://olstussy.top/2023/11/24/Kripe%20Structure/</loc>
+    
+    <lastmod>2023-11-24</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://olstussy.top/2023/11/24/%E6%95%B0%E7%90%86%E9%80%BB%E8%BE%91%E5%9F%BA%E7%A1%80/</loc>
+    
+    <lastmod>2023-11-24</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://olstussy.top/2023/09/10/%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0(1-7%E7%AB%A0)/</loc>
     
     <lastmod>2023-09-10</lastmod>
@@ -220,7 +238,7 @@
 
   <url>
     <loc>https://olstussy.top/</loc>
-    <lastmod>2023-09-10</lastmod>
+    <lastmod>2023-11-24</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -228,63 +246,70 @@
   
   <url>
     <loc>https://olstussy.top/tags/AI/</loc>
-    <lastmod>2023-09-10</lastmod>
+    <lastmod>2023-11-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://olstussy.top/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/</loc>
-    <lastmod>2023-09-10</lastmod>
+    <lastmod>2023-11-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://olstussy.top/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/</loc>
-    <lastmod>2023-09-10</lastmod>
+    <lastmod>2023-11-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://olstussy.top/tags/Linux/</loc>
-    <lastmod>2023-09-10</lastmod>
+    <lastmod>2023-11-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://olstussy.top/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/</loc>
-    <lastmod>2023-09-10</lastmod>
+    <lastmod>2023-11-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://olstussy.top/tags/CV/</loc>
-    <lastmod>2023-09-10</lastmod>
+    <lastmod>2023-11-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://olstussy.top/tags/Python/</loc>
-    <lastmod>2023-09-10</lastmod>
+    <lastmod>2023-11-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://olstussy.top/tags/Numpy/</loc>
-    <lastmod>2023-09-10</lastmod>
+    <lastmod>2023-11-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://olstussy.top/tags/%E7%BB%9F%E8%AE%A1%E5%AD%A6/</loc>
-    <lastmod>2023-09-10</lastmod>
+    <lastmod>2023-11-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://olstussy.top/tags/%E5%BD%A2%E5%BC%8F%E5%8C%96%E6%96%B9%E6%B3%95/</loc>
+    <lastmod>2023-11-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
@@ -293,28 +318,42 @@
   
   <url>
     <loc>https://olstussy.top/categories/AI/</loc>
-    <lastmod>2023-09-10</lastmod>
+    <lastmod>2023-11-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://olstussy.top/categories/Linux/</loc>
-    <lastmod>2023-09-10</lastmod>
+    <lastmod>2023-11-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://olstussy.top/categories/Python/</loc>
-    <lastmod>2023-09-10</lastmod>
+    <lastmod>2023-11-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://olstussy.top/categories/%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%A0/</loc>
-    <lastmod>2023-09-10</lastmod>
+    <lastmod>2023-11-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://olstussy.top/categories/%E5%BD%A2%E5%BC%8F%E5%8C%96%E6%96%B9%E6%B3%95/</loc>
+    <lastmod>2023-11-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://olstussy.top/categories/%E7%A6%BB%E6%95%A3%E6%95%B0%E5%AD%A6/</loc>
+    <lastmod>2023-11-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
